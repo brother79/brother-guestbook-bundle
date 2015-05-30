@@ -6,7 +6,6 @@ parameters:
             to: %brother_guestbook.mailer.admin_email%
             view: %brother_guestbook.view.mail.notify%
 services:
-
     gedmo.listener.softdeleteable:
         class: Gedmo\SoftDeleteable\SoftDeleteableListener
         tags:
@@ -22,8 +21,6 @@ services:
 
     brother_guestbook.pager.default:
         class: %brother_guestbook.pager.class%
-#        arguments:
-#            - { type: service, id: twig.extension.pagerfanta, on-invalid: null}
 
     brother_guestbook.mailer:
         class: %brother_guestbook.mailer.class%
