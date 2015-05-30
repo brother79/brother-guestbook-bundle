@@ -28,7 +28,7 @@ brother_guestbook.pager.class: Brother\GuestbookBundle\Pager\DefaultMongodb</par
             <argument type: service" id: event_dispatcher }
             <argument type: service" id: brother_guestbook.document_manager }
             <argument>%brother_guestbook.model.entry.class%</argument>
-			<argument>%brother_guestbook.auto_publish%</argument>
+   <argument>%brother_guestbook.auto_publish%</argument>
             <call method: setPager
                 <argument type: service" id: brother_guestbook.pager }
             </call>

@@ -20,7 +20,7 @@ services:
             - { name: form.type, alias: brother_guestbook_entry_edit }
         argumens:
             - %brother_guestbook.model.entry.class%
-		
+  
     brother_guestbook.form_factory.edit:
         factory: ['@form.factory', 'createNamed']
         class: Symfony\Component\Form\Form
@@ -35,7 +35,7 @@ services:
             - { name: form.type, alias: brother_guestbook_entry_reply }
         argumens:
             - %brother_guestbook.model.entry.class%
-		
+  
     brother_guestbook.form_factory.reply:
         factory: ['@form.factory', 'createNamed']
         class: Symfony\Component\Form\Form

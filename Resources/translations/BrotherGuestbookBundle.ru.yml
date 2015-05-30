@@ -10,18 +10,18 @@
 no:                         No
 yes:                        Yes
 never:                      Never
-brother_guestbook:              Guestbook
+brother_guestbook:          Guestbook
 
 toggle_navigation:          Toggle navigation
-confirm_entry_remove:     	Are you sure you want to delete this guestbook entry.
-confirm_entries_delete:    	Are you sure you want to delete these guestbook entries.
+confirm_entry_remove:       Are you sure you want to delete this guestbook entry.
+confirm_entries_delete:     Are you sure you want to delete these guestbook entries.
 
 #titles
 title:
     add:                    Add
-    add_entry:            	Add Entry
-    new_entry:            	New Entry
-    edit_entry:           	Edit Entry
+    add_entry:              Add Entry
+    new_entry:              New Entry
+    edit_entry:             Edit Entry
     sign_guestbook:         Sign guestbook
 
     state:                  State
