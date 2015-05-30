@@ -28,7 +28,7 @@
         <field name: replied" column: replied" type: boolean" nullable: true }
         <field name: createdAt" column: createdAt" type: datetime }
         <field name: updatedAt" column: updatedAt" type: datetime" nullable: true }
-        <field name: repliedAt" column: repliedAt" type: datetime" nullable: true }
+        <field name: replied_at" column: replied_at" type: datetime" nullable: true }
 
     </document>
 

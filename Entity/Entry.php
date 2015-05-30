@@ -250,19 +250,18 @@ class Entry extends AbstractEntry
     {
         return $this->replied_at;
     }
+
     /**
-     * @ORM\PrePersist
      */
     public function prePersist()
     {
-        // Add your code here
+        parent::prePersist();
     }
 
     /**
-     * @ORM\PreUpdate
      */
     public function preUpdate()
     {
-        // Add your code here
+        parent::preUpdate();
     }
 }

@@ -192,7 +192,7 @@ abstract class Entry implements EntryInterface
      */
     public function getUpdatedAt()
     {
-       if(!$this->validateDate($this->updatedAt))
+       if(!$this->validateDate($this->updated_at))
             $this->updated_at = null;
 
         return $this->updated_at;
@@ -225,29 +225,29 @@ abstract class Entry implements EntryInterface
      */
     public function setRepliedAt($repliedAt)
     {
-        $this->repliedAt = $repliedAt;
+        $this->replied_at = $repliedAt;
     }
     
     /**
-     * Get repliedAt
+     * Get replied_at
      *
      * @return \DateTime 
      */
     public function getRepliedAt()
     {
-       if(!$this->validateDate($this->repliedAt))
-            $this->repliedAt = null;
+       if(!$this->validateDate($this->replied_at))
+            $this->replied_at = null;
 
-        return $this->repliedAt;
+        return $this->replied_at;
     }
     
     /**
-     * Update repliedAt
+     * Update replied_at
      */
     public function updateRepliedAt()
     {
         $this->setReplied(1);
-        $this->repliedAt = new \DateTime();
+        $this->replied_at = new \DateTime();
     }
     
     /**

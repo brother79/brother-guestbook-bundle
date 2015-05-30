@@ -1,20 +1,27 @@
-#
-# This file is part of the BrotherGuestbookBundle package.
-#
-# (c) Yos Okusanya <yos.okusanya@gmail.com>
-#
-# This source file is subject to the MIT license that is bundled
-# with this source code in the file LICENSE.
+no:                         Нет
+yes:                        Да
+never:                      Никогда
+brother_guestbook:          Отзывы
 
-#text
-no:                         No
-yes:                        Yes
-never:                      Never
-brother_guestbook:          Guestbook
+toggle_navigation:          Переключить навизацию
+confirm_entry_remove:       Вы действительно хотите удалить отзыв?
+confirm_entries_delete:     Вы действительно хотите удалить эти отзывы?
 
-toggle_navigation:          Toggle navigation
-confirm_entry_remove:       Are you sure you want to delete this guestbook entry.
-confirm_entries_delete:     Are you sure you want to delete these guestbook entries.
+Action:          Действия
+Comment:         Комментарий
+Created At:      Дата создания
+Email:           E-mail
+Entry List:      Отзывы
+Guestbook:       Отзывы
+Id:              №
+Name:            Имя
+Replied At:      Дата ответа
+Replied:         Ответил
+State:           Статус
+Updated At:      Дата модификации
+
+General:         Основные
+Other:           Дополнительные
 
 #titles
 title:
@@ -57,19 +64,19 @@ link:
 
 #messages
 flash:
-    awaiting_approval:      Your comment is awaiting moderation
+    awaiting_approval:      Ваш комментарий ожидает модерацию
 
     save:
-        success:            Entry saved
-        error:              Error saving guestbook entry
+        success:            Запись сохранена
+        error:              Ошибка сохранения отзыва в гостевой книге
 
     remove:
-        success:            Guestbook entry deleted
-        error:              Error deleting guestbook entry with id %id%
+        success:            Отзыв удалён успешно
+        error:              Ошибка удаления отзыва № %id%
 
     update:
-        success:            Guestbook entry updated
-        error:              Error updating guestbook entry with id %id%
+        success:            Отзыв успешно обновлён
+        error:              Ошибка сохранения отзыва № %id%
 
     reply:
         success:            Reply sent to %name% (%email%)
@@ -88,40 +95,40 @@ flash:
         error:              Error unpublishing guestbook entries with id(s) (%ids%)
 
     error:
-        bad_request:        "Error: Bad request"
-        spam_detected:      Guestbook entry flagged as spam
+        bad_request:        "Ошибка: Неверный запрос"
+        spam_detected:      Отзыв помечен как спам
 
     select_error:
-        delete:             You must select at least one guestbook entry to delete.
-        publish:            You must select at least one guestbook entry to publish.
-        unpublish:          You must select at least one guestbook entry to unpublish.
+        delete:             Вы должны выделить хотябы один отзыв для удаления.
+        publish:            Вы должны выделить хотябы один отзыв для публикации.
+        unpublish:          Вы должны выделить хотябы один отзыв для отмены публикации.
 
 #form fields
 form:
     entry:
-        name:                   Name
-        email:                  Email
+        name:                   Имя
+        email:                  E-mail
         comment:                Comment
-        submit:                 Post comment
-        created:                Created
+        submit:                 Отправить комментарий
+        created:                Создан
         state:                  Publish
-        enter_your_comment_here: Enter your comment here
+        enter_your_comment_here: Введите свой комментарий тут
 
     reply:
-        to:                     To
-        from:                   From
-        title:                  Title
-        message:                Message
+        to:                     Кому
+        from:                   От кого
+        title:                  Заголовок
+        message:                Сообщение
 
 #emails
 email.reply: |
-  Dear %name%
+  Уважаемый %name%
 
-  --------- original message ----------
+  --------- Исходное сообщение ----------
   %comment%
 
 email.admin_notification: |
-  New comment from %name%(%email%)
+  Новый комментарий от %name%(%email%)
 
-  Comment:
+  Комментарий:
   %comment%

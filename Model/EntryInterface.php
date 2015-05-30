@@ -123,14 +123,14 @@ interface EntryInterface
     public function getReplied();
 
     /**
-     * Set repliedAt
+     * Set replied_at
      *
      * @param \DateTime $repliedAt
      */
     public function setRepliedAt($repliedAt);
 
     /**
-     * Get repliedAt
+     * Get replied_at
      *
      * @return boolean
      */
