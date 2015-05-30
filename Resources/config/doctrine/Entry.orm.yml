@@ -12,6 +12,10 @@ Brother\GuestbookBundle\Entity\Entry:
             type: string
             length: 100
             nullable: true
+        profession:
+            type: string
+            length: 100
+            nullable: true
         email:
             type: string
             length: 100
@@ -35,4 +39,3 @@ Brother\GuestbookBundle\Entity\Entry:
     lifecycleCallbacks:
         prePersist: [ prePersist ]
         preUpdate:  [ preUpdate ]
-

@@ -269,4 +269,60 @@ class Entry extends AbstractEntry
     {
         parent::preUpdate();
     }
+    /**
+     * @var string
+     */
+    private $profession;
+
+    /**
+     * @var \Brother\GuestbookBundle\Entity\%sonata.user.admin.user.class%
+     */
+    private $user;
+
+
+    /**
+     * Set profession
+     *
+     * @param string $profession
+     * @return Entry
+     */
+    public function setProfession($profession)
+    {
+        $this->profession = $profession;
+
+        return $this;
+    }
+
+    /**
+     * Get profession
+     *
+     * @return string 
+     */
+    public function getProfession()
+    {
+        return $this->profession;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Brother\GuestbookBundle\Entity\%sonata.user.admin.user.class% $user
+     * @return Entry
+     */
+    public function setUser($user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Brother\GuestbookBundle\Entity\%sonata.user.admin.user.class% 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

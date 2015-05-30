@@ -2,6 +2,7 @@
 
 namespace Brother\GuestbookBundle\DependencyInjection;
 
+use Sonata\EasyExtendsBundle\Mapper\DoctrineCollector;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -130,6 +131,30 @@ class BrotherGuestbookExtension extends Extension
                 $container->setAlias('brother_guestbook.spam_detector', 'brother_guestbook.spam_detector.akismet');
             }
         }
+        $this->registerDoctrineMapping($config);
 
     }
+
+    public function registerDoctrineMapping(array $config)
+    {
+        $collector = DoctrineCollector::getInstance();
+
+        $collector->addAssociation('Brother\GuestbookBundle\Entity\Entry', 'mapManyToOne', array(
+            'fieldName'     => 'user',
+            'targetEntity'  => $config['user_class'],
+            'cascade'       => array(
+                'persist',
+            ),
+            'mappedBy'      => NULL,
+            'joinColumns'   =>  array(
+                array(
+                    'name'  => 'user_id',
+                    'referencedColumnName' => 'id',
+                ),
+            ),
+            'orphanRemoval' => false,
+        ));
+
+    }
+
 }
