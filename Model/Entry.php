@@ -62,7 +62,7 @@ abstract class Entry implements EntryInterface
     /**
      * @var \DateTime
      */
-    protected $repliedAt;
+    protected $replied_at;
 	
     /**
      * Get id
@@ -272,7 +272,7 @@ abstract class Entry implements EntryInterface
      */
     public function prePersist()
     {
-        $this->createdAt = new \DateTime();
+        $this->created_at = new \DateTime();
         $this->replied = 0;
     }   
    
@@ -281,6 +281,9 @@ abstract class Entry implements EntryInterface
      */
     public function preUpdate()
     {
-        $this->updatedAt = new \DateTime();
-    }	
+        $this->updated_at = new \DateTime();
+        if ($this->created_at == null) {
+            $this->created_at = new \DateTime();
+        }
+    }
 }
