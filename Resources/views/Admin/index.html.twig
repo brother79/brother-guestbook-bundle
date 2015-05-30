@@ -1,0 +1,224 @@
+{#
+
+ This file is part of the BrotherGuestbookBundle package.
+
+ (c) Yos Okusanya <yos.okusanya@gmail.com>
+
+ This source file is subject to the MIT license that is bundled
+ with this source code in the file LICENSE.
+#}
+
+{% extends 'BrotherGuestbookBundle:Admin:layout.html.twig' %}
+
+{% block content_navbar %}
+    {{  parent() }}
+    <li>
+        <a href="#" onclick="publishEntries()">
+            <i class="glyphicon glyphicon-ok-sign"></i> {{ 'link.publish'|trans({}, 'BrotherGuestbookBundle') }}
+        </a>
+    </li>
+    <li>
+        <a href="#" onclick="unpublishEntries()">
+            <i class="glyphicon glyphicon-minus-sign"></i> {{ 'link.unpublish'|trans({}, 'BrotherGuestbookBundle') }}
+        </a>
+    </li>
+    <li>
+        <a href="#" onclick="deleteEntries()">
+            <i class="glyphicon glyphicon-trash"></i> {{ 'link.delete'|trans({}, 'BrotherGuestbookBundle') }}
+        </a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="brother-guestbook-container">
+        <div class="brother-gustbook-list">
+            {% if entries|length > 0 %}
+                <form method="post" action={{ path( 'brother_guestbook_admin') }} id="brotherGuestbookAdminList" class="brother-guestbook-admin-list">
+                    <table class="table table-striped">
+                        <thead>
+                            <th width="5px">#</th>
+                            <th width="5px">
+                                <input id="brotherGuestbookMasterSelect" type="checkbox">
+                            </th>
+                            <th></th>
+                            <th>{{ 'title.comment'|trans({}, 'BrotherGuestbookBundle') }}</th>
+                            <th class="hidden-xs">{{ 'title.updated'|trans({}, 'BrotherGuestbookBundle') }}</th>
+                            <th>{{ 'title.state'|trans({}, 'BrotherGuestbookBundle') }}</th>
+                            <th class="hidden-xs">{{ 'title.replied'|trans({}, 'BrotherGuestbookBundle') }}</th>
+                            <th class="hidden-xs">{{ 'title.edit'|trans({}, 'BrotherGuestbookBundle') }}</th>
+                            <th class="hidden-xs">{{ 'title.reply'|trans({}, 'BrotherGuestbookBundle') }}</th>
+                            <th class="visible-xs">{{ 'title.action'|trans({}, 'BrotherGuestbookBundle') }}</th>
+                        </thead>
+                        <tbody>
+                        {# ---- text variables ---- #}
+                        {% set never_text = 'never'|trans({}, 'BrotherGuestbookBundle') %}
+                        {% set publish_text = 'link.publish'|trans({}, 'BrotherGuestbookBundle') %}
+                        {% set unpublish_text = 'link.unpublish'|trans({}, 'BrotherGuestbookBundle') %}
+                        {% set edit_text = 'link.edit'|trans({}, 'BrotherGuestbookBundle') %}
+                        {% set delete_text = 'link.delete'|trans({}, 'BrotherGuestbookBundle') %}
+                        {% set reply_text = 'link.reply'|trans({}, 'BrotherGuestbookBundle') %}
+
+                        {% for entry in entries %}
+                            {% if( entry.state == 0) %}
+                                {% set state_class, toggle_class, toggle_state, toggle_text = 'ban-circle', 'ok-circle', 1, publish_text %}
+                            {% else %}
+                                {% set state_class, toggle_class, toggle_state, toggle_text = 'ok-circle', 'ban-circle', 0, unpublish_text %}
+                            {% endif %}
+
+                            {# ---- entry links ---- #}
+                            {% set entry_id = entry.id %}
+                            {% set edit_link = path( 'brother_guestbook_edit', {'id': entry_id}) %}
+                            {% set remove_link = path( 'brother_guestbook_remove', {'id': entry_id}) %}
+                            {% set reply_link = path( 'brother_guestbook_reply', {'id': entry_id}) %}
+                            {% set change_state_link = path( 'brother_guestbook_change_state', {'ids': entry_id, 'state':toggle_state}) %}
+
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td class="align-center">
+                                    <input type="checkbox" class="brother-guestbook-checkbox-list" name="ids[]" value="{{ entry_id }}">
+                                </td>
+                                <td>
+                                    {{ entry.name }}
+                                    <br>
+                                    {{ entry.email }}
+                                    <br>
+                                    {{ entry.createdAt is empty ? "" : entry.createdAt|date(date_format) }}
+                                </td>
+                                <td>
+                                    {{ entry.comment|nl2br }}
+                                </td>
+
+                                <td class="hidden-xs">
+                                    {{ entry.updatedAt is empty ? never_text : entry.updatedAt|date(date_format, false) }}
+                                </td>
+
+                                <td>
+                                    <a href="{{ change_state_link }}">
+                                        <i class="glyphicon glyphicon-{{ state_class }}" data-toggle="tooltip" title="{{ toggle_text }}"></i>
+                                    </a>
+                                </td>
+                                <td class="hidden-xs">
+                                    <span>
+                                        <i class="glyphicon glyphicon-{{ entry.replied == 0 ? "ban-circle" : "ok-circle" }}" ></i>
+                                    </span>
+                                </td>
+                                <td class="hidden-xs">
+                                    <a href="{{ edit_link }}">
+                                        <i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="{{ edit_text }}"></i>
+                                    </a>
+                                </td>
+                                <td class="hidden-xs">
+                                    <a href="{{ reply_link }}">
+                                        <i class="glyphicon glyphicon-envelope" data-toggle="tooltip" title="{{ reply_text }}"></i>
+                                    </a>
+                                </td>
+
+                                <td class="visible-xs"> <!-- action buttons for small devices only-->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                            Action
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="{{ edit_link }}">
+                                                    <i class="glyphicon glyphicon-edit"></i> {{ edit_text }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ change_state_link }}">
+                                                    <i class="glyphicon glyphicon-{{ toggle_class }}"></i> {{ toggle_text }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ reply_link }}">
+                                                    <i class="glyphicon glyphicon-envelope"></i> {{ reply_text }}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ remove_link }}" onclick="if(!removeEntry()){return false;}">
+                                                    <i class="glyphicon glyphicon-trash"></i> {{ delete_text }}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </form>
+            {% endif %}
+        </div><!-- /brother-guestbook-list -->
+
+        <div class="brother-pager">
+            {{ pagination_html|raw }}
+        </div>
+
+    </div><!-- /brother-guestbook-container -->
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script>
+function removeEntry()
+{
+    return confirm("{{ 'confirm_entry_remove'|trans({}, 'BrotherGuestbookBundle') }}");
+}
+
+function deleteEntries()
+{
+    if ( checkEntrySelected()) {
+        alert("{{ 'flash.select_error.delete'|trans({}, 'BrotherGuestbookBundle') }}");
+        return;
+    }
+
+    if (confirm("{{ 'confirm_entries_delete'|trans({}, 'BrotherGuestbookBundle') }}")) {
+        submitAdminForm('{{ path('brother_guestbook_delete') }}');
+    }
+}
+
+function submitAdminForm(url)
+{
+    var guestbookForm = jQuery('#brotherGuestbookAdminList');
+    guestbookForm.attr("action", url);
+    guestbookForm.submit();
+}
+
+function checkEntrySelected()
+{
+    return jQuery('.brother-guestbook-checkbox-list:checkbox:checked').length == 0;
+}
+
+function publishEntries()
+{
+	if ( checkEntrySelected()) {
+		alert("{{ 'flash.select_error.publish'|trans({}, 'BrotherGuestbookBundle') }}");
+		return;
+	}
+    submitAdminForm('{{ path('brother_guestbook_publish') }}');
+}
+
+function unpublishEntries()
+{
+	if ( checkEntrySelected() ) {
+		alert("{{ 'flash.select_error.unpublish'|trans({}, 'BrotherGuestbookBundle') }}");
+		return;
+	}
+	submitAdminForm('{{ path("brother_guestbook_unpublish") }}');
+}
+
+(function($){
+    $(function() {
+        $('#brotherGuestbookMasterSelect').change(function(){
+            $('.brother-guestbook-checkbox-list').prop('checked', $(this).prop('checked'));
+        });
+    });
+
+    $("[data-toggle=tooltip]").tooltip({ placement: 'top'});
+}(jQuery));
+</script>
+{% endblock %}

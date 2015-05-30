@@ -1,0 +1,45 @@
+services:
+    brother_guestbook.form.entry.type:
+        class: %brother_guestbook.form.entry.class%
+        tags:
+            - { name: form.type, alias: brother_guestbook_entry }
+        arguments:
+            - %brother_guestbook.model.entry.class%
+
+    brother_guestbook.form_factory.entry:
+        factory: ['@form.factory', 'createNamed']
+        class: Symfony\Component\Form\Form
+        arguments:
+            - %brother_guestbook.form.entry.name%
+            - %brother_guestbook.form.entry.type%
+            - ~
+
+    brother_guestbook.form.edit.type:
+        class: %brother_guestbook.form.edit.class%
+        tags:
+            - { name: form.type, alias: brother_guestbook_entry_edit }
+        argumens:
+            - %brother_guestbook.model.entry.class%
+		
+    brother_guestbook.form_factory.edit:
+        factory: ['@form.factory', 'createNamed']
+        class: Symfony\Component\Form\Form
+        arguments:
+            - %brother_guestbook.form.edit.name%
+            - %brother_guestbook.form.edit.type%</argument>
+            - ~
+
+    brother_guestbook.form.reply.type:
+        class: %brother_guestbook.form.reply.class%
+        tags:
+            - { name: form.type, alias: brother_guestbook_entry_reply }
+        argumens:
+            - %brother_guestbook.model.entry.class%
+		
+    brother_guestbook.form_factory.reply:
+        factory: ['@form.factory', 'createNamed']
+        class: Symfony\Component\Form\Form
+        arguments:
+            - %brother_guestbook.form.reply.name%
+            - %brother_guestbook.form.reply.type%
+            - null

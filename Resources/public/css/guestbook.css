@@ -1,0 +1,8 @@
+
+body {padding-top: 70px;}
+.row-padded-top{margin-top:10px;}
+.row-padded-bottom{margin-bottom:10px;}
+.brother-guestbook-panel-container .brother-guestbook-author{font-weight:bold;}
+.brother-guestbook-panel-container .brother-guestbook-date{font-size: 12px; padding-left: 5px;}
+.brother-guestbook-form .form-btns{margin-top:15px; margin-bottom:10px;}
+.brother-guestbook-admin-list table tbody tr td{vertical-align:middle;}

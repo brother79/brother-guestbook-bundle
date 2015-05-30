@@ -1,0 +1,24 @@
+#
+# This file is part of the BrotherGuestbookBundle package.
+#
+# (c) Yos Okusanya <yos.okusanya@gmail.com>
+#
+# This source file is subject to the MIT license that is bundled
+# with this source code in the file LICENSE.
+
+brother_guestbook:
+    name:
+        blank: Please enter a name
+        short: "Your name must be at least {{ limit }} characters long"
+        long: "Your name cannot be longer than {{ limit }} characters"
+
+    email:
+        blank: Please enter an email address
+        invalid: Please enter a valid email address
+        short: "Your email must be at least {{ limit }} characters long"
+        long: "Your email cannot be longer than {{ limit }} characters"
+
+    comment:
+        blank: Please enter a comment
+        short: "Your comment must be at least {{ limit }} characters long"
+        long: "Your comment cannot be longer than {{ limit }} characters"

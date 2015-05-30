@@ -1,0 +1,54 @@
+{#
+
+ This file is part of the BrotherGuestbookBundle package.
+
+ (c) Yos Okusanya <yos.okusanya@gmail.com>
+
+ This source file is subject to the MIT license that is bundled
+ with this source code in the file LICENSE.
+#}
+{% extends '::base.html.twig' %}
+
+{% set title = 'title.guestbook'|trans({}, 'BrotherGuestbookBundle') %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('bundles/brotherguestbook/css/guestbook.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block body %}
+    {% block content_header %}{% endblock %}
+
+    <div class="container">
+        <div class="row row-padded-top">
+
+            {% for type, flashMessages in app.session.flashbag.all() %}
+                {% for flashMessage in flashMessages %}
+                    <div class="flash-{{ type }}">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+        </div>
+
+        <div class="row row-padded-top">
+            <div class="page-header">
+                {% block content_title %}<h2>{{ title }}</h2>{% endblock %}
+            </div>
+            <div class="block">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

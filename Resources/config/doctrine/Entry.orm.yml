@@ -1,0 +1,38 @@
+Brother\GuestbookBundle\Entity\Entry:
+    table: brother_guestbook
+    type: entity
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 100
+            nullable: true
+        email:
+            type: string
+            length: 100
+            nullable: false
+        comment:
+            type: text
+        state:
+            type: boolean
+        replied:
+            type: boolean
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: true
+        updated_at:
+            type: datetime
+            nullable: true
+        replied_at:
+            type: datetime
+            nullable: true
+    lifecycleCallbacks:
+        prePersist: [ prePersist ]
+        preUpdate:  [ preUpdate ]
+

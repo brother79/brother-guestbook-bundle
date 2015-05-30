@@ -1,0 +1,3 @@
+brother_guestbook_guestbook:
+    resource: "@BrotherGuestbookBundle/Resources/config/routing/guestbook.yml"
+    prefix:   /guestbook

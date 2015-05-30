@@ -1,0 +1,34 @@
+parameters:
+    brother_guestbook.mailer.config:
+        notification:
+            title: %brother_guestbook.mailer.email_title%
+            from: %brother_guestbook.mailer.sender_email%
+            to: %brother_guestbook.mailer.admin_email%
+            view: %brother_guestbook.view.mail.notify%
+services:
+
+    gedmo.listener.softdeleteable:
+        class: Gedmo\SoftDeleteable\SoftDeleteableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ @annotation_reader ] ]
+
+    brother_guestbook.admin.guestbook:
+        class: Brother\GuestbookBundle\Admin\GuestbookAdmin
+        arguments: [~, Brother\GuestbookBundle\Entity\Entry, BrotherGuestbookBundle:GuestbookAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Guestbook}
+
+    brother_guestbook.pager.default:
+        class: %brother_guestbook.pager.class%
+#        arguments:
+#            - { type: service, id: twig.extension.pagerfanta, on-invalid: null}
+
+    brother_guestbook.mailer:
+        class: %brother_guestbook.mailer.class%
+        arguments:
+            - '@event_dispatcher'
+            - { type: service', id: mailer, on-invalid: null}
+            - '@templating'
+            - %brother_guestbook.mailer.config%

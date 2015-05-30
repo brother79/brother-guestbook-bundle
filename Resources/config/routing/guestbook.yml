@@ -1,0 +1,39 @@
+brother_guestbook_list:
+    path:     /{page}
+    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:index", page: 1 }
+    requirements:
+        page: \d+
+
+brother_guestbook_show:
+    path:     /{id}/show
+    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:show" }
+
+brother_guestbook_new:
+    path:     /new
+    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:new" }
+
+brother_guestbook_create:
+    path:     /create
+    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:create" }
+    methods: [POST]
+
+
+brother_guestbook_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:edit" }
+    requirements:
+        page: \d+
+
+brother_guestbook_update:
+    path:     /{id}/update
+    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:update" }
+    methods:  [POST, PUT]
+    requirements:
+        page: \d+
+
+brother_guestbook_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:delete" }
+    methods:  [POST, DELETE]
+    requirements:
+        page: \d+

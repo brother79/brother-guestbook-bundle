@@ -1,0 +1,39 @@
+<?xml version: 1.0" encoding: UTF-8" ?>
+
+<!--
+ This file is part of the BrotherGuestbookBundle package.
+
+ (c) Yos Okusanya <yos.okusanya@gmail.com>
+
+ This source file is subject to the MIT license that is bundled
+ with this source code in the file LICENSE.
+-->
+
+<container xmlns: http://symfony.com/schema/dic/services"
+    xmlns:xsi: http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation: http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+
+    <parameters>
+brother_guestbook.model.entry.class: Brother\GuestbookBundle\Document\Entry</parameter>
+brother_guestbook.manager.entry.class: Brother\GuestbookBundle\Document\EntryManager</parameter>
+brother_guestbook.pager.class: Brother\GuestbookBundle\Pager\DefaultMongodb</parameter>
+    </parameters>
+
+    <services>
+        <!-- Document manager -->
+        brother_guestbook.document_manager" alias: doctrine_mongodb.odm.default_document_manager }
+
+        <!-- Entry Manager -->
+        <service id: brother_guestbook.entry_manager" class: %brother_guestbook.manager.entry.class%
+            <argument type: service" id: event_dispatcher }
+            <argument type: service" id: brother_guestbook.document_manager }
+            <argument>%brother_guestbook.model.entry.class%</argument>
+			<argument>%brother_guestbook.auto_publish%</argument>
+            <call method: setPager
+                <argument type: service" id: brother_guestbook.pager }
+            </call>
+        </service>
+
+    </services>
+
+</container>

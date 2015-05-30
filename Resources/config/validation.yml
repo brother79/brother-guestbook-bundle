@@ -1,0 +1,39 @@
+#
+# This file is part of the BrotherGuestbookBundle package.
+#
+# (c) Yos Okusanya <yos.okusanya@gmail.com>
+#
+# This source file is subject to the MIT license that is bundled
+# with this source code in the file LICENSE.
+
+Brother\GuestbookBundle\Model\Entry:
+    properties:
+        name:
+            - NotBlank:
+                message: brother_guestbook.name.blank
+            - Length:
+                min: 3
+                max: 100
+                #max: 255
+                minMessage: brother_guestbook.name.short
+                maxMessage: brother_guestbook.name.long
+
+        email:
+            - NotBlank:
+                message: brother_guestbook.email.blank
+            - Email:
+                message: brother_guestbook.email.invalid
+            - Length:
+                max: 100
+                #max: 255
+                minMessage: brother_guestbook.email.short
+                maxMessage: brother_guestbook.email.long
+
+        comment:
+            - NotBlank:
+                message: brother_guestbook.comment.blank
+            - Length:
+                min: 2
+                #max: 255
+                minMessage: brother_guestbook.comment.short
+                maxMessage: brother_guestbook.comment.long

@@ -1,0 +1,16 @@
+parameters:
+    brother_guestbook.model.entry.class: Brother\GuestbookBundle\Entity\Entry
+    brother_guestbook.manager.entry.class: Brother\GuestbookBundle\Entity\EntryManager
+    brother_guestbook.pager.class: Brother\GuestbookBundle\Pager\DefaultORM
+services:
+    brother_guestbook.entity_manager:
+        alias: 'doctrine.orm.entity_manager'
+    brother_guestbook.entry_manager:
+        class: %brother_guestbook.manager.entry.class%
+        arguments:
+            - '@event_dispatcher'
+            - '@brother_guestbook.entity_manager'
+            - %brother_guestbook.model.entry.class%
+            - %brother_guestbook.auto_publish%
+        calls:
+            - [setPager, ['@brother_guestbook.pager']]

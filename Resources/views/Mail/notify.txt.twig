@@ -1,0 +1,18 @@
+{#
+
+ This file is part of the BrotherCommentBundle package.
+
+ (c) Yos Okus <yos.okusanya@gmail.com>
+
+ This source file is subject to the MIT license that is bundled
+ with this source code in the file LICENSE.
+#}
+
+{% autoescape false %}
+{{ 'email.admin_notification'|trans({
+    '%name%'   : comment.name,
+    '%email%'  : comment.email,
+    '%comment%': comment.message,
+    '%date%': comment.createdAt
+    }, 'BrotherCommentBundle')}}
+{% endautoescape %}
