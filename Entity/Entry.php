@@ -56,6 +56,11 @@ class Entry extends AbstractEntry
      */
     protected $replied_at;
 
+    function __construct()
+    {
+        $this->created_at = new \DateTime();
+    }
+
 
     /**
      * Get id
