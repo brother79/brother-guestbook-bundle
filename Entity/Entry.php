@@ -21,47 +21,47 @@ class Entry extends AbstractEntry
     /**
      * @var integer
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * @var string
      */
-    private $comment;
+    protected $comment;
 
     /**
      * @var boolean
      */
-    private $state;
+    protected $state;
 
     /**
      * @var boolean
      */
-    private $replied;
+    protected $replied;
 
     /**
      * @var \DateTime
      */
-    private $created_at;
+    protected $created_at;
 
     /**
      * @var \DateTime
      */
-    private $updated_at;
+    protected $updated_at;
 
     /**
      * @var \DateTime
      */
-    private $replied_at;
+    protected $replied_at;
 
 
     /**
