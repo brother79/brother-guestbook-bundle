@@ -47,12 +47,12 @@ abstract class Entry implements EntryInterface
     /**
      * @var \DateTime
      */
-    protected $createdAt;
+    protected $created_at;
 
     /**
      * @var \DateTime
      */
-    protected $updatedAt;
+    protected $updated_at;
 
     /**
      * @var boolean
@@ -161,7 +161,7 @@ abstract class Entry implements EntryInterface
      */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $createdAt;
     }
 	
     /**
@@ -171,7 +171,7 @@ abstract class Entry implements EntryInterface
      */
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     /**
@@ -181,7 +181,7 @@ abstract class Entry implements EntryInterface
      */
     public function setUpdatedAt($updatedAt)
     {
-        $this->updatedAt = $updatedAt;
+        $this->updated_at = $updatedAt;
     }
     
 
@@ -193,9 +193,9 @@ abstract class Entry implements EntryInterface
     public function getUpdatedAt()
     {
        if(!$this->validateDate($this->updatedAt))
-            $this->updatedAt = null;
+            $this->updated_at = null;
 
-        return $this->updatedAt;
+        return $this->updated_at;
     }
     
     /**
