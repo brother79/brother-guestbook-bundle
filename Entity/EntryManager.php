@@ -88,6 +88,15 @@ class EntryManager extends AbstractEntryManager
         return !$this->em->getUnitOfWork()->isInIdentityMap($entry);
     }
 
+    public function getLast()
+    {
+        $entries = $this->repository->findBy(array(),array('created_at' => 'desc'), 1);
+        if (count($entries)) {
+            return $entries[0];
+        }
+        return null;
+    }
+
     /**
      * {@inheritDoc}
      */
