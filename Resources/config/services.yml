@@ -13,11 +13,6 @@ services:
         calls:
             - [ setAnnotationReader, [ @annotation_reader ] ]
 
-    brother_guestbook.admin.guestbook:
-        class: Brother\GuestbookBundle\Admin\GuestbookAdmin
-        arguments: [~, Brother\GuestbookBundle\Entity\Entry, BrotherGuestbookBundle:GuestbookAdmin]
-        tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: Guestbook}
 
     brother_guestbook.pager.default:
         class: %brother_guestbook.pager.class%
@@ -29,3 +24,9 @@ services:
             - { type: service', id: mailer, on-invalid: null}
             - '@templating'
             - %brother_guestbook.mailer.config%
+
+    brother_guestbook.admin.entry:
+        class: Brother\GuestbookBundle\Admin\EntryAdmin
+        arguments: [~, Brother\GuestbookBundle\Entity\Entry, BrotherGuestbookBundle:EntryAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: Entry}

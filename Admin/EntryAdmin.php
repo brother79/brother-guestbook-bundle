@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class GuestbookAdmin extends Admin
+class EntryAdmin extends Admin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -18,12 +18,13 @@ class GuestbookAdmin extends Admin
         $datagridMapper
             ->add('id')
             ->add('name')
-            ->add('q')
-            ->add('a')
             ->add('email')
-            ->add('executor')
             ->add('comment')
-            ->add('priority')
+            ->add('state')
+            ->add('replied')
+            ->add('created_at')
+            ->add('updated_at')
+            ->add('replied_at')
         ;
     }
 
@@ -34,12 +35,14 @@ class GuestbookAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('q')
-            ->add('a')
+            ->add('name')
             ->add('email')
+            ->add('comment')
             ->add('state')
-			->add('created_at')
-			->add('updated_at')
+            ->add('replied')
+            ->add('created_at')
+            ->add('updated_at')
+            ->add('replied_at')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -58,16 +61,15 @@ class GuestbookAdmin extends Admin
         $formMapper
             ->with('General', array('class' => 'col-md-6'))
             ->add('name')
-            ->add('q')
-            ->add('a')
             ->add('email')
+            ->add('comment')
             ->end()
             ->with('Other', array('class' => 'col-md-6'))
-            ->add('executor')
-            ->add('comment')
-            ->add('priority')
             ->add('state')
-            ->add('created_at', 'sonata_type_datetime_picker')
+            ->add('replied')
+            ->add('created_at')
+            ->add('updated_at')
+            ->add('replied_at')
             ->end()
         ;
     }
@@ -80,14 +82,13 @@ class GuestbookAdmin extends Admin
         $showMapper
             ->add('id')
             ->add('name')
-            ->add('q')
-            ->add('a')
             ->add('email')
-            ->add('executor')
             ->add('comment')
-            ->add('priority')
+            ->add('state')
+            ->add('replied')
             ->add('created_at')
             ->add('updated_at')
+            ->add('replied_at')
         ;
     }
 }

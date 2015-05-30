@@ -4,7 +4,7 @@ namespace Brother\GuestbookBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController;
 
-class GuestbookAdminController extends CRUDController
+class EntryAdminController extends CRUDController
 {
 
 /*    public function executeListShowOpen(sfWebRequest $request)
