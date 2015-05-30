@@ -1,0 +1,11 @@
+<?php
+/* @var $object Guestbook */
+use_helper('I18N');
+?>
+<strong>Вопрос:</strong><?php echo $object->getQ() ?><br/>
+<strong>Ответ:</strong><?php echo $object->getA() ?><br/>
+Адрес отправителя: <a href="mailto:<?php echo $object->getEmail() ?>"><?php echo $object->getEmail() ?></a><br/>
+<strong>Исполнитель:</strong><?php echo $object->getIsp() ?><br/>
+<strong>Комментарий:</strong><?php echo $object->getComment() ?><br/>
+<strong>Приоритет:</strong><?php echo __($object->getPriority()); ?><br/>
+<strong>Статус:</strong><?php echo __($object->getState()); ?><br/>
