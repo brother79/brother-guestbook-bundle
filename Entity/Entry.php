@@ -141,6 +141,18 @@ class Entry extends AbstractEntry
         return $this->comment;
     }
 
+    public function getAnnounce()
+    {
+        if (mb_strlen($this->comment, 'utf-8')>100) {
+            return mb_substr($this->comment, 0, 60, 'utf-8') . ' ... ... ... ' .
+             mb_substr($this->comment, mb_strlen($this->comment, 'utf-8')-20, 30, 'utf-8');
+
+        } else {
+            return $this->comment;
+        }
+        return mb_substr($this->comment, 0, 100, 'utf-8');
+    }
+
     /**
      * Set state
      *
@@ -275,7 +287,7 @@ class Entry extends AbstractEntry
     private $profession;
 
     /**
-     * @var \Brother\GuestbookBundle\Entity\%sonata.user.admin.user.class%
+     * @var \AppBundle\Entity\User
      */
     private $user;
 
@@ -300,7 +312,7 @@ class Entry extends AbstractEntry
      */
     public function getProfession()
     {
-        return $this->profession;
+        return $this->profession ? $this->profession : ($this->user ? $this->user->getProfession() : null);
     }
 
     /**
@@ -319,10 +331,20 @@ class Entry extends AbstractEntry
     /**
      * Get user
      *
-     * @return \Brother\GuestbookBundle\Entity\%sonata.user.admin.user.class% 
+     * @return \AppBundle\Entity\User
      */
     public function getUser()
     {
         return $this->user;
+    }
+
+    public function hasImage()
+    {
+        return $this->getUser() && $this->getUser()->getImage();
+    }
+
+    public function getImage()
+    {
+        return $this->hasImage() ? $this->getUser()->getImage() : null;
     }
 }

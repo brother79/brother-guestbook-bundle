@@ -42,13 +42,14 @@ class EntryAdmin extends Admin
     {
         $listMapper
             ->add('id')
+            ->add('user')
             ->add('name', null, array('editable' => true))
+            ->add('profession')
             ->add('email')
-            ->add('comment')
+            ->add('announce')
             ->add('state', null, array('editable' => true))
             ->add('replied', null, array('editable' => true))
             ->add('created_at')
-            ->add('updated_at')
             ->add('replied_at')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -66,12 +67,14 @@ class EntryAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('General', array('class' => 'col-md-6'))
+            ->with('Personal', array('class' => 'col-md-6'))
+            ->add('user')
             ->add('name')
+            ->add('profession')
             ->add('email')
-            ->add('comment')
             ->end()
             ->with('Other', array('class' => 'col-md-6'))
+            ->add('comment')
             ->add('state')
             ->add('replied')
 
@@ -85,15 +88,21 @@ class EntryAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
+            ->with('Personal', array('class' => 'col-md-4'))
             ->add('id')
+            ->add('user')
             ->add('name')
+            ->add('profession')
             ->add('email')
+            ->end()
+            ->with('Other', array('class' => 'col-md-8'))
             ->add('comment')
             ->add('state')
             ->add('replied')
             ->add('created_at')
             ->add('updated_at')
             ->add('replied_at')
+            ->end()
         ;
     }
 }
