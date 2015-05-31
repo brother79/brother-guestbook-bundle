@@ -291,6 +291,11 @@ class Entry extends AbstractEntry
      */
     private $user;
 
+    function __toString()
+    {
+       return $this->name;
+    }
+
 
     /**
      * Set profession
