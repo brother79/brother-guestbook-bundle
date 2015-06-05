@@ -28,7 +28,7 @@ class Configuration implements ConfigurationInterface
             ->booleanNode('notify_admin')->defaultFalse()->end()
             ->booleanNode('spam_detection')->defaultFalse()->end()
             ->scalarNode('date_format')->defaultValue('d/m/Y H:i:s')->end()
-            ->scalarNode('user_class')->defaultValue('AppBundle\Entity\User')->end()
+            ->scalarNode('user_class')->defaultValue('AppBundle\Entity\User\User')->end()
             ->arrayNode('mailer')->addDefaultsIfNotSet()
             ->children()
             ->scalarNode('admin_email')->defaultValue('admin@localhost.com')->end()

@@ -287,7 +287,7 @@ class Entry extends AbstractEntry
     private $profession;
 
     /**
-     * @var \AppBundle\Entity\User
+     * @var \AppBundle\Entity\User\User
      */
     private $user;
 
@@ -336,7 +336,7 @@ class Entry extends AbstractEntry
     /**
      * Get user
      *
-     * @return \AppBundle\Entity\User
+     * @return \AppBundle\Entity\User\User
      */
     public function getUser()
     {
