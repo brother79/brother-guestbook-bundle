@@ -74,7 +74,14 @@ class EntryAdmin extends Admin
             ->add('email')
             ->end()
             ->with('Other', array('class' => 'col-md-6'))
-            ->add('comment')
+            ->add('comment', 'textarea', array(
+                'attr' => array(
+                    'class' => 'span10',
+                    'rows' => 12
+                ),
+                'horizontal_input_wrapper_class' => $this->getConfigurationPool()->getOption('form_type') == 'horizontal' ? 'col-lg-12' : '',
+            ))
+
             ->add('state')
             ->add('replied')
 
