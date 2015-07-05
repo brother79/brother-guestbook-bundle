@@ -11,11 +11,13 @@
 
 namespace Brother\GuestbookBundle\Model;
 
+use Brother\CommonBundle\Model\Entry\EntryInterface as BaseEntryInterface;
+
 /**
  * Interface to be implemented by the comment class.
  */
  
-interface EntryInterface
+interface EntryInterface extends BaseEntryInterface
 {
     /**
      * Get id
