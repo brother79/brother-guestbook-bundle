@@ -86,9 +86,9 @@ abstract class EntryManager implements EntryManagerInterface
 	 *
      * @return EntryInterface
      */
-    public function findEntryById($id)
+    public function findOneById($id)
     {
-        return $this->findEntryBy(array('id' => $id));
+        return $this->findOneBy(array('id' => $id));
     }
 
     /**

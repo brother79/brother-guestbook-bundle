@@ -75,7 +75,7 @@ abstract class BaseController extends Controller
      */
     public function getEntry($id)
     {	
-        $entry = $this->getManager()->findEntryById($id);
+        $entry = $this->getManager()->findOneById($id);
 
         if (null === $entry) {
             throw new NotFoundHttpException(sprintf("Guestbook entry with id '%s' does not exists.", $id));

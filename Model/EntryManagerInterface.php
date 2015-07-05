@@ -24,7 +24,7 @@ interface EntryManagerInterface
      *
      * @return EntryInterface
      */
-    public function findEntryById($id);
+    public function findOneById($id);
 
     /**
      * Finds a guestbook entry by the given criteria
@@ -33,7 +33,7 @@ interface EntryManagerInterface
      *
      * @return EntryInterface
      */
-    public function findEntryBy(array $criteria);
+    public function findOneBy(array $criteria);
 
     /**
      * Finds guestbook entries by the given criteria
@@ -42,7 +42,7 @@ interface EntryManagerInterface
      *
      * @return array of EntryInterface
      */
-    public function findEntriesBy(array $criteria);
+    public function findBy(array $criteria);
 
     /**
      * Creates an empty guestbook entry instance

@@ -438,7 +438,7 @@ class GuestbookController extends Controller
      */
     public function getEntry($id)
     {
-        $guestbook = $this->getManager()->findEntryById($id);
+        $guestbook = $this->getManager()->findOneById($id);
 
         if (null === $guestbook) {
             throw new NotFoundHttpException(sprintf("Guestbook entry with id '%s' does not exists.", $id));
