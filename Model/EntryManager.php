@@ -11,7 +11,6 @@
 
 namespace Brother\GuestbookBundle\Model;
 
-use Brother\CommonBundle\Model\Entry\EntryManager as BaseEntryManager;
 use Brother\GuestbookBundle\Event\Events;
 use Brother\GuestbookBundle\Event\EntryEvent;
 use Brother\GuestbookBundle\Event\EntryDeleteEvent;
@@ -24,8 +23,17 @@ use Symfony\Component\Form\FormInterface;
 /**
  * Base class for the guestbook manager.
  */
-abstract class EntryManager extends BaseEntryManager implements EntryManagerInterface
+abstract class EntryManager implements EntryManagerInterface
 {
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $dispatcher;
+
+    /**
+     * @var string
+     */
+    protected $class;
 
     /**
      * @var boolean
@@ -46,7 +54,8 @@ abstract class EntryManager extends BaseEntryManager implements EntryManagerInte
      */
     public function __construct(EventDispatcherInterface $dispatcher, $class, $autoPublish)
     {
-        parent::__construct($dispatcher, $class);
+        $this->dispatcher = $dispatcher;
+        $this->class = $class;
         $this->autoPublish = $autoPublish;
     }
 
@@ -242,21 +251,21 @@ abstract class EntryManager extends BaseEntryManager implements EntryManagerInte
      *
      * @param EntryInterface $entry
      */
-//    abstract protected function doSave(EntryInterface $entry);
+    abstract protected function doSave(EntryInterface $entry);
 
     /**
      * Performs the removal of the entry.
      *
      * @param EntryInterface $entry
      */
-//    abstract protected function doRemove(EntryInterface $entry);
+    abstract protected function doRemove(EntryInterface $entry);
 	
     /**
      * Performs the removal of a list of guestbook entries.
      *
      * @param array $ids
      */
-//    abstract protected function doDelete($ids);
+    abstract protected function doDelete($ids);
 
     /**
      * Performs the state update of a list of guestbook entries.
@@ -264,6 +273,6 @@ abstract class EntryManager extends BaseEntryManager implements EntryManagerInte
      * @param array 	$ids
      * @param integer   $state
      */
-//    abstract protected function doUpdateState($ids, $state);
+    abstract protected function doUpdateState($ids, $state);
 
 }

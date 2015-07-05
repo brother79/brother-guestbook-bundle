@@ -286,4 +286,12 @@ abstract class Entry implements EntryInterface
             $this->created_at = new \DateTime();
         }
     }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 }
