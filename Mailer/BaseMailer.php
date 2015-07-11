@@ -11,9 +11,9 @@
 
 namespace Brother\GuestbookBundle\Mailer;
 
+use Brother\CommonBundle\Event\Events;
+use Brother\CommonBundle\Event\MailEvent;
 use Brother\GuestbookBundle\Model\EntryInterface;
-use Brother\GuestbookBundle\Event\Events;
-use Brother\GuestbookBundle\Event\MailEvent;
 
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Templating\EngineInterface;
