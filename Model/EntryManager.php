@@ -40,37 +40,6 @@ abstract class EntryManager extends ORMEntryManager
         parent::__construct($dispatcher, $em, $class );
     }
 
-    /**
-     * Set pager
-     *
-     * @param PagerInterface $pager
-     **/
-    public function setPager(PagerInterface $pager)
-    {
-        $this->pager = $pager;
-    }
-
-    /**
-     * Returns the fully qualified guestbook class name
-     *
-     * @return string
-     **/
-    public function getClass()
-    {
-        return $this->class;
-    }
-
-    /**
-     * Finds a guestbook entry by given id
-     *
-     * @param  string $id
-	 *
-     * @return EntryInterface
-     */
-    public function findOneById($id)
-    {
-        return $this->findOneBy(array('id' => $id));
-    }
 
     /**
      * Creates an empty Entry instance
