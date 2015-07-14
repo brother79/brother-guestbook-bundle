@@ -110,10 +110,10 @@ form:
     entry:
         name:                   Имя
         email:                  E-mail
-        comment:                Comment
+        comment:                Отзыв
         submit:                 Отправить комментарий
         created:                Создан
-        state:                  Publish
+        state:                  Опубликован
         enter_your_comment_here: Введите свой комментарий тут
 
     reply:
