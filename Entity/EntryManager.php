@@ -2,11 +2,7 @@
 
 namespace Brother\GuestbookBundle\Entity;
 
-use Brother\CommonBundle\AppDebug;
-use Doctrine\ORM\EntityManager;
-use Brother\GuestbookBundle\Model\EntryInterface;
 use Brother\GuestbookBundle\Model\EntryManager as AbstractEntryManager;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Default ORM EntryManager.
@@ -24,7 +20,7 @@ class EntryManager extends AbstractEntryManager
         return null;
     }
 
-ы    /**
+    /**
      * {@inheritDoc}
      */
     public function getPaginatedList($offset, $limit, $criteria = array())

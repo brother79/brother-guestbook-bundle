@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class GuestbookType extends AbstractType
+class EntryType extends AbstractType
 {
     /**
      * @var string
@@ -30,25 +30,29 @@ class GuestbookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('q')
-            ->add('a')
-            ->add('email')
-            ->add('executor')
-            ->add('comment')
-            ->add('priority')
-        ;
-    }
-    
+            ->add('name', 'text', array(
+                'label' => 'form.entry.name',
+                'translation_domain' => 'BrotherGuestbookBundle'
+            ))
+            ->add('email', 'email', array(
+                'label' => 'form.entry.email',
+                'translation_domain' => 'BrotherGuestbookBundle',
+            ))
+            ->add('comment', 'textarea', array(
+                'label' => 'form.entry.comment',
+                'translation_domain' => 'BrotherGuestbookBundle',
+            ))
+            ->getForm();
+	}
+
     /**
      * @param OptionsResolverInterface $resolver
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'Brother\GuestbookBundle\Entity\Guestbook'
-        ));
-    }
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+	{
+        parent::setDefaultOptions($resolver);
+        $resolver->setDefaults(array('data_class' => $this->entryClass));
+	}
 
     /**
      * @return string

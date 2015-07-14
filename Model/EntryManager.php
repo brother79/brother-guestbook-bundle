@@ -1,22 +1,16 @@
 <?php
 
-/*
- * This file is part of the BrotherGuestbookBundle package.
- *
- * (c) Yos Okusanya <yos.okusanya@gmail.com>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- */
-
 namespace Brother\GuestbookBundle\Model;
 
-use Brother\GuestbookBundle\Event\Events;
-use Brother\GuestbookBundle\Event\EntryEvent;
-use Brother\GuestbookBundle\Event\EntryDeleteEvent;
+use Brother\CommonBundle\Event\EntryDeleteEvent;
+use Brother\CommonBundle\Event\EntryEvent;
+use Brother\CommonBundle\Event\Events;
+use Brother\CommonBundle\Model\Entry\EntryInterface;
+use Brother\CommonBundle\Model\Entry\ORMEntryManager;
 use Brother\GuestbookBundle\Event\EntryStateEvent;
 use Brother\GuestbookBundle\Pager\PagerInterface;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
 
@@ -34,14 +28,14 @@ abstract class EntryManager extends ORMEntryManager
     /**
      * Constructor.
      *
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface 	$dispatcher
-     * @param string                                              			$class
-     * @param boolean                                              			$autoPublish
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
+     * @param EntityManager $em
+     * @param string $class
+     * @param boolean $autoPublish
      */
     public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class, $autoPublish)
     {
-        $this->dispatcher = $dispatcher;
-        $this->class = $class;
+        $this->autoPublish = $autoPublish;
         parent::__construct($dispatcher, $em, $class );
     }
 
@@ -231,29 +225,7 @@ abstract class EntryManager extends ORMEntryManager
 
         return $this->save($entry);
     }
-
-    /**
-     * Performs the persistence of the guestbook entry.
-     *
-     * @param EntryInterface $entry
-     */
-    abstract protected function doSave(EntryInterface $entry);
-
-    /**
-     * Performs the removal of the entry.
-     *
-     * @param EntryInterface $entry
-     */
-    abstract protected function doRemove(EntryInterface $entry);
-	
-    /**
-     * Performs the removal of a list of guestbook entries.
-     *
-     * @param array $ids
-     */
-    abstract protected function doDelete($ids);
-
-    /**
+   /**
      * Performs the state update of a list of guestbook entries.
      *
      * @param array 	$ids

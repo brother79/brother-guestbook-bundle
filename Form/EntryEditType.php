@@ -1,21 +1,12 @@
 <?php
 
-/*
- * This file is part of the BrotherGuestbookBundle
- *
- * (c) Yos Okusanya <yos.okusanya@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-namespace Brother\GuestbookBundle\Form\Type;
+namespace Brother\GuestbookBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EntryReplyType extends AbstractType
+class EntryEditType extends AbstractType
 {	
     /**
      * @var string
@@ -37,24 +28,29 @@ class EntryReplyType extends AbstractType
      */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-        $builder->add('email', 'email', array(
-                'label' => 'form.reply.to',
+        $builder->add('name', 'text', array(
+                'label' => 'form.entry.name',
+                'translation_domain' => 'BrotherGuestbookBundle'
+            ))
+            ->add('email', 'email', array(
+                'label' => 'form.entry.email',
                 'translation_domain' => 'BrotherGuestbookBundle',
             ))
-            ->add('senderEmail', 'email', array(
-                'mapped' => false,
-                'label' => 'form.reply.from',
+            ->add('comment', 'textarea', array(
+                'label' => 'form.entry.message',
                 'translation_domain' => 'BrotherGuestbookBundle',
             ))
-            ->add('title', 'text', array(
-                'mapped' => false,
-                'label' => 'form.reply.title',
+            ->add('state', 'choice', array(
+                'label' => 'form.entry.state',
                 'translation_domain' => 'BrotherGuestbookBundle',
+                'choices' => array(0 => 'no', 1 => 'yes'),
+                'multiple' => false,
+                'expanded' => false,
             ))
-            ->add('message', 'textarea', array(
-                'mapped' => false,
-                'label' => 'form.reply.message',
+            ->add('createdAt', 'datetime', array(
+                'label' => 'form.entry.created',
                 'translation_domain' => 'BrotherGuestbookBundle',
+                'with_seconds' => true,
             ))
             ->getForm();
 	}
@@ -73,6 +69,6 @@ class EntryReplyType extends AbstractType
      */
 	public function getName()
 	{
-		return 'brother_guestbook_entry_reply';
+		return 'brother_guestbook_entry_edit';
 	}
 }

@@ -1,20 +1,10 @@
 <?php
 
-/*
- * This file is part of the BrotherGuestbookBundle package.
- *
- * (c) Yos Okus <yos.okusanya@gmail.com>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- */
-
 namespace Brother\GuestbookBundle\Mailer;
 
 use Brother\CommonBundle\Event\Events;
 use Brother\CommonBundle\Event\MailEvent;
-use Brother\GuestbookBundle\Model\EntryInterface;
-
+use Brother\CommonBundle\Model\Entry\EntryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -46,41 +36,6 @@ abstract class BaseMailer implements MailerInterface
         $this->config = $config;
         $this->dispatcher = $dispatcher;
         $this->templating = $templating;
-    }
-
-    /**
-     * @param EntryInterface $entry
-     *
-     * @return mixed
-     */
-    public function sendAdminNotification(EntryInterface $entry)
-    {
-        $emailTitle = str_replace(
-            array('{name}','{email}'),
-            array($entry->getName(), $entry->getEmail()),
-            $this->config['notification']['title']
-		);
-
-        $mailOptions = array();
-        $mailOptions['subject'] = $emailTitle;
-        $mailOptions['from'] = $this->config['notification']['from'];
-        $mailOptions['to'] = $this->config['notification']['to'];
-        $mailOptions['body'] = $this->templating->render(
-            $this->config['notification']['view'],
-            array('entry' => $entry)
-        );
-
-        $event = new MailEvent($entry, $mailOptions);
-        $this->dispatcher->dispatch(Events::ENTRY_PRE_NOTIFY, $event);
-
-        if ($event->isPropagationStopped()) {
-            return false;
-        }
-		
-		$this->sendEmail($mailOptions);
-        $this->dispatcher->dispatch(Events::ENTRY_POST_NOTIFY, $event);
-
-		return true;
     }
 
     /**

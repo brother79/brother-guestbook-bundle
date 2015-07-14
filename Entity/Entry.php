@@ -2,6 +2,8 @@
 
 namespace Brother\GuestbookBundle\Entity;
 
+use Brother\CommonBundle\Mailer\MailerEntryInterface;
+use Brother\CommonBundle\Model\Entry\EntryInterface;
 use Brother\GuestbookBundle\Model\Entry as AbstractEntry;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -23,6 +25,7 @@ class Entry implements EntryInterface, MailerEntryInterface
     /**
      * @var string
      * @Assert\NotBlank()
+     * @Assert\Email()
      */
     protected $email;
 
@@ -56,16 +59,25 @@ class Entry implements EntryInterface, MailerEntryInterface
      */
     protected $replied_at;
 
+ /**
+     * @var \AppBundle\Entity\User\User
+     */
+    private $user;
+
     function __construct()
     {
         $this->created_at = new \DateTime();
     }
 
+function __toString()
+    {
+        return $this->name;
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -88,7 +100,7 @@ class Entry implements EntryInterface, MailerEntryInterface
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -111,7 +123,7 @@ class Entry implements EntryInterface, MailerEntryInterface
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -134,7 +146,7 @@ class Entry implements EntryInterface, MailerEntryInterface
     /**
      * Get comment
      *
-     * @return string 
+     * @return string
      */
     public function getComment()
     {
@@ -143,9 +155,9 @@ class Entry implements EntryInterface, MailerEntryInterface
 
     public function getAnnounce()
     {
-        if (mb_strlen($this->comment, 'utf-8')>100) {
+        if (mb_strlen($this->comment, 'utf-8') > 100) {
             return mb_substr($this->comment, 0, 60, 'utf-8') . ' ... ... ... ' .
-             mb_substr($this->comment, mb_strlen($this->comment, 'utf-8')-20, 30, 'utf-8');
+            mb_substr($this->comment, mb_strlen($this->comment, 'utf-8') - 20, 30, 'utf-8');
 
         } else {
             return $this->comment;
@@ -169,7 +181,7 @@ class Entry implements EntryInterface, MailerEntryInterface
     /**
      * Get state
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getState()
     {
@@ -192,7 +204,7 @@ class Entry implements EntryInterface, MailerEntryInterface
     /**
      * Get replied
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getReplied()
     {
@@ -215,7 +227,7 @@ class Entry implements EntryInterface, MailerEntryInterface
     /**
      * Get created_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -238,10 +250,13 @@ class Entry implements EntryInterface, MailerEntryInterface
     /**
      * Get updated_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
+       if(!$this->validateDate($this->updated_at))
+            $this->updated_at = null;
+
         return $this->updated_at;
     }
 
@@ -261,63 +276,44 @@ class Entry implements EntryInterface, MailerEntryInterface
     /**
      * Get replied_at
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getRepliedAt()
     {
+        if (!$this->validateDate($this->replied_at)) {
+            $this->replied_at = null;
+        }
+
         return $this->replied_at;
     }
 
     /**
+     * Pre persist
      */
     public function prePersist()
     {
-        parent::prePersist();
+        $this->created_at = new \DateTime();
+        $this->replied = 0;
     }
 
     /**
+     * Pre update
      */
     public function preUpdate()
     {
-        parent::preUpdate();
-    }
-    /**
-     * @var string
-     */
-    private $profession;
-
-    /**
-     * @var \AppBundle\Entity\User\User
-     */
-    private $user;
-
-    function __toString()
-    {
-       return $this->name;
-    }
-
-
-    /**
-     * Set profession
-     *
-     * @param string $profession
-     * @return Entry
-     */
-    public function setProfession($profession)
-    {
-        $this->profession = $profession;
-
-        return $this;
+        $this->updated_at = new \DateTime();
+        if ($this->created_at == null) {
+            $this->created_at = new \DateTime();
+        }
     }
 
     /**
-     * Get profession
-     *
-     * @return string 
+     * Update replied_at
      */
-    public function getProfession()
+    public function updateRepliedAt()
     {
-        return $this->profession ? $this->profession : ($this->user ? $this->user->getProfession() : null);
+        $this->setReplied(1);
+        $this->replied_at = new \DateTime();
     }
 
     /**
@@ -351,5 +347,30 @@ class Entry implements EntryInterface, MailerEntryInterface
     public function getImage()
     {
         return $this->hasImage() ? $this->getUser()->getImage() : null;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+  /**
+     * validate date fields
+     *
+     * @param mixed $date 
+     * @return bool 
+     */
+    function validateDate($date)
+    {
+        if(! $date instanceof \DateTime) {
+            return false;
+		}
+		
+        list($month, $day, $year) = explode('-', $date->format('n-j-Y'));
+		
+        return checkdate( (int)$month, (int)$day , (int)$year );
     }
 }

@@ -2,64 +2,6 @@
         <div class="brother-guestbook-panel-container">
             <h1>Гостевая книга</h1>
 
-    <table class="records_list">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Q</th>
-                <th>A</th>
-                <th>Email</th>
-                <th>Executor</th>
-                <th>Comment</th>
-                <th>Priority</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entries %}
-            <tr>
-                <td><a href="{{ path('brother_guestbook_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.name }}</td>
-                <td>{{ entity.q }}</td>
-                <td>{{ entity.a }}</td>
-                <td>{{ entity.email }}</td>
-                <td>{{ entity.executor }}</td>
-                <td>{{ entity.comment }}</td>
-                <td>{{ entity.priority }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('brother_guestbook_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('brother_guestbook_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('brother_guestbook_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
-
-
-{% block content_navbar %}
-    {{  parent() }}
-    <li>
-        <a href="#guestbookForm">
-            <i class="glyphicon glyphicon-plus-sign"></i>  {{ 'link.sign_guestbook'|trans({}, 'BrotherGuestbookBundle') }}
-        </a>
-    </li>
-
             {% if entries|length > 0 %}
 				{% for entry in entries %}
 					<div class="panel panel-default">
@@ -77,17 +19,11 @@
 					</div><!-- /panel -->
 				{% endfor %}
             {% endif %}
-        </div><!-- /brother-guestbook-panel-container -->
 
-        {{ pagination_html }}
-
-    </div><!-- /brother-guestbook-container -->
-
-    <div id="guestbookForm">
-        <div class="page-header">
-            <h2>{{ 'title.sign_guestbook'|trans({}, 'BrotherGuestbookBundle') }}</h2>
+        <a class="btn btn-success"
+           onclick="bindingsUtil.sendPost('{{ path('brother_guestbook_new_dialog') }}');"
+                >Добавить комментарий</a>
         </div>
-
-        {{ include('BrotherGuestbookBundle:Frontend:form.html.twig',{ 'form': form })}}
+    {{ pagination_html }}
     </div>
 

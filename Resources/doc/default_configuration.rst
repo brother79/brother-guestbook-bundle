@@ -25,17 +25,17 @@ Default Configuration
             entry:
                 name: brother_guestbook_entry
                 type: brother_guestbook_entry
-                class: Brother\GuestbookBundle\Form\Type\EntryType      # guestbook entry form class
+                class: Brother\GuestbookBundle\Form\EntryType      # guestbook entry form class
 
             edit:
                 name: brother_guestbook_entry_edit
                 type: brother_guestbook_entry_edit
-                class: Brother\GuestbookBundle\Form\Type\EntryEditType  # guestbook entry edit form class
+                class: Brother\GuestbookBundle\Form\EntryEditType  # guestbook entry edit form class
 
             reply:
                 name: brother_guestbook_entry_reply
                 type: brother_guestbook_entry_reply
-                class: Brother\GuestbookBundle\Form\Type\EntryReplyType # guestbook entry reply form class
+                class: Brother\GuestbookBundle\Form\EntryReplyType # guestbook entry reply form class
 
         service:
             pager: ~                                                # (optional) custom pager service
