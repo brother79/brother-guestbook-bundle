@@ -1,6 +1,7 @@
     <div class="brother-guestbook-container">
         <div class="brother-guestbook-panel-container">
             <h1>Отзывы</h1>
+            {{ sonata_block_render_event('breadcrumb', { 'context': 'cms_breadcrumbs', 'current_uri': app.request.requestUri }) }}
 
             {% if entries|length > 0 %}
 				{% for entry in entries %}

@@ -28,10 +28,10 @@ class EntryAdmin extends Admin
             ->add('email')
             ->add('comment')
             ->add('state')
-            ->add('replied')
+//            ->add('replied')
             ->add('created_at')
             ->add('updated_at')
-            ->add('replied_at')
+//            ->add('replied_at')
         ;
     }
 
@@ -47,9 +47,9 @@ class EntryAdmin extends Admin
             ->add('email')
             ->add('announce')
             ->add('state', null, array('editable' => true))
-            ->add('replied', null, array('editable' => true))
+//            ->add('replied', null, array('editable' => true))
             ->add('created_at')
-            ->add('replied_at')
+//            ->add('replied_at')
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -81,7 +81,7 @@ class EntryAdmin extends Admin
             ))
 
             ->add('state')
-            ->add('replied')
+//            ->add('replied')
 
             ->end()
         ;
@@ -102,10 +102,10 @@ class EntryAdmin extends Admin
             ->with('Other', array('class' => 'col-md-8'))
             ->add('comment')
             ->add('state')
-            ->add('replied')
+//            ->add('replied')
             ->add('created_at')
             ->add('updated_at')
-            ->add('replied_at')
+//            ->add('replied_at')
             ->end()
         ;
     }
