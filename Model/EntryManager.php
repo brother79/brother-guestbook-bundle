@@ -10,6 +10,7 @@ use Brother\CommonBundle\Model\Entry\ORMEntryManager;
 use Brother\GuestbookBundle\Event\EntryStateEvent;
 use Brother\GuestbookBundle\Pager\PagerInterface;
 
+use Brother\QuestBundle\Entity\Entry;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
@@ -86,6 +87,8 @@ abstract class EntryManager extends ORMEntryManager
         if (null !== $id) {
             $entry->setId($id);
         }
+
+        $entry->setState($this->autoPublish ? 1 : 0);
 
         $event = new EntryEvent($entry);
         $this->dispatcher->dispatch(Events::ENTRY_CREATE, $event);

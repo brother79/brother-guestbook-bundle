@@ -59,7 +59,7 @@ class Entry implements EntryInterface, MailerEntryInterface
      */
     protected $replied_at;
 
- /**
+   /**
      * @var \AppBundle\Entity\User\User
      */
     private $user;
@@ -69,7 +69,7 @@ class Entry implements EntryInterface, MailerEntryInterface
         $this->created_at = new \DateTime();
     }
 
-function __toString()
+    function __toString()
     {
         return $this->name;
     }

@@ -21,6 +21,25 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class EntryController extends BaseController
 {
     /**
+     * @var EntryManagerInterface
+     */
+    protected $manager = null;
+
+    /**
+     * Returns the guestbook entry manager
+     *
+     * @return EntryManagerInterface | \Brother\GuestbookBundle\Entity\EntryManager
+     */
+    private function getManager()
+    {
+        if (null === $this->manager) {
+            $this->manager = $this->container->get('brother_guestbook.entry_manager');
+        }
+
+        return $this->manager;
+    }
+
+    /**
      * Shows the entries.
      *
      * @param int $page	query offset
@@ -53,7 +72,7 @@ class EntryController extends BaseController
      */
     public function createAction(Request $request)
     {
-        $entity = new Entry();
+        $entity = $this->getManager()->createEntry();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
         $result = new BaseApi();
@@ -66,7 +85,7 @@ class EntryController extends BaseController
             if ($this->container->getParameter('brother_guestbook.notify_admin')) {
                 $this->get('brother_guestbook.mailer')->sendAdminNotification($entity);
             }
-            return $this->ajaxResponse($result->addMessage('Ваш комментарий получен. Вы можете оставить ещё один.')
+            return $this->ajaxResponse($result->addMessage('Ваш отзыв получен. Вы можете оставить ещё один.')
                 ->addRenderDom('#guestbook_new_dialog', array('modal' => 'hide'))
                 ->result());
         }
@@ -88,7 +107,7 @@ class EntryController extends BaseController
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Отправить комментарий'));
+        $form->add('submit', 'submit', array('label' => 'Отправить отзыв'));
 
         return $form;
     }
@@ -360,24 +379,7 @@ class EntryController extends BaseController
         return $this->render($view, array('form' => $form->createView()));
     }
 
-    /**
-     * @var EntryManagerInterface
-     */
-    protected $manager = null;
 
-    /**
-     * Returns the guestbook entry manager
-     *
-     * @return EntryManagerInterface | \Brother\GuestbookBundle\Entity\EntryManager
-     */
-    private function getManager()
-    {
-        if (null === $this->manager) {
-            $this->manager = $this->container->get('brother_guestbook.entry_manager');
-        }
-
-        return $this->manager;
-    }
 
     /**
      * Returns the requested Form Factory service

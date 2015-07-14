@@ -1,6 +1,6 @@
     <div class="brother-guestbook-container">
         <div class="brother-guestbook-panel-container">
-            <h1>Гостевая книга</h1>
+            <h1>Отзывы</h1>
 
             {% if entries|length > 0 %}
 				{% for entry in entries %}
@@ -22,7 +22,7 @@
 
         <a class="btn btn-success"
            onclick="bindingsUtil.sendPost('{{ path('brother_guestbook_new_dialog') }}');"
-                >Добавить комментарий</a>
+                >Добавить отзыв</a>
         </div>
     {{ pagination_html }}
     </div>

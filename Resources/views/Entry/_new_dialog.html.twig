@@ -9,19 +9,18 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Добавить комментарий</h4>
+                <h4 class="modal-title" id="myModalLabel">Добавить отзыв</h4>
             </div>
             <div class="modal-body">
                 <div class="form-error">{{ form_errors(form.name) }}</div>
                 {{ form_row(form.name) }}
                 {{ form_row(form.email) }}
                 {{ form_row(form.comment) }}
-                {{ form_widget(form) }}
+                {#{{ form_widget(form) }}#}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
                 {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary btn-success' } }) }}
-
             </div>
             {{ form_end(form) }}
         </div>
