@@ -11,10 +11,10 @@ use Brother\GuestbookBundle\Form\GuestbookType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Guestbook controller.
+ * Entry controller.
  *
  */
-class GuestbookController extends Controller
+class EntryController extends BaseController
 {
     /**
      * Shows the entries.
@@ -347,17 +347,6 @@ class GuestbookController extends Controller
 
             if ($form->isValid()) {
                 $entry = $form->getData();
-
-                // check for spam
-                if ($this->container->getParameter('brother_guestbook.enable_spam_detection')) {
-                    $spamDetector = $this->container->get('brother_guestbook.spam_detector');
-
-                    if ($spamDetector->isSpam($entry)) {
-                        $this->setFlashMessage('flash.error.spam_detected', array(), 'error');
-
-                        return $this->renderPage('new', array('form' => $form->createView()));
-                    }
-                }
 
                 // save entry
                 if ($this->getManager()->save($entry) !== false) {

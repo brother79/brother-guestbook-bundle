@@ -28,14 +28,9 @@ class BrotherGuestbookExtension extends Extension
         $configs = $container->getExtensionConfig($this->getAlias());
         $guestbookConfig = $this->processConfiguration(new Configuration(), $configs);
 
-        // enable spam detection if AkismetBundle is registered
-        // else disable spam detection
-        // can be overridden by setting the brother_guestbook.spam_detection.enable config
-        $brotherConfig['spam_detection'] = isset($bundles['AkismetBundle']) ? true : false;
-
-            if ( 'orm' == $guestbookConfig['db_driver']) {
+        if ('orm' == $guestbookConfig['db_driver']) {
             $brotherConfig['class']['pager'] = 'Brother\GuestbookBundle\Pager\DefaultORM';
-            } else {
+        } else {
             $brotherConfig['class']['pager'] = 'Brother\GuestbookBundle\Pager\DefaultMongodb';
         }
 
@@ -46,7 +41,7 @@ class BrotherGuestbookExtension extends Extension
 
     /**
      * {@inheritDoc}
-     */	
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
@@ -119,18 +114,6 @@ class BrotherGuestbookExtension extends Extension
             $container->setAlias('brother_guestbook.pager', 'brother_guestbook.pager.default');
         }
 
-        // spam detection
-        $container->setParameter('brother_guestbook.enable_spam_detection', $config['spam_detection']);
-
-        if ($config['spam_detection']) {
-            // load external spam detector if set else load default
-            if (isset($config['service']['spam_detector'])) {
-                $container->setAlias('brother_guestbook.spam_detector', $config['service']['spam_detector']);
-            } else {
-                $loader->load('spam_detection.xml');
-                $container->setAlias('brother_guestbook.spam_detector', 'brother_guestbook.spam_detector.akismet');
-            }
-        }
         $this->registerDoctrineMapping($config);
 
     }
@@ -140,15 +123,15 @@ class BrotherGuestbookExtension extends Extension
         $collector = DoctrineCollector::getInstance();
 
         $collector->addAssociation('Brother\GuestbookBundle\Entity\Entry', 'mapManyToOne', array(
-            'fieldName'     => 'user',
-            'targetEntity'  => $config['user_class'],
-            'cascade'       => array(
+            'fieldName' => 'user',
+            'targetEntity' => $config['user_class'],
+            'cascade' => array(
                 'persist',
             ),
-            'mappedBy'      => NULL,
-            'joinColumns'   =>  array(
+            'mappedBy' => NULL,
+            'joinColumns' => array(
                 array(
-                    'name'  => 'user_id',
+                    'name' => 'user_id',
                     'referencedColumnName' => 'id',
                 ),
             ),

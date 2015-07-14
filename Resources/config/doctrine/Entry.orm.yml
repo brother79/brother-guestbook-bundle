@@ -1,6 +1,13 @@
 Brother\GuestbookBundle\Entity\Entry:
     table: brother_guestbook
     type: entity
+    indexes:
+        created_at_idx:
+            columns:
+                - created_at
+        name_idx:
+            columns:
+                - name
     id:
         id:
             type: integer

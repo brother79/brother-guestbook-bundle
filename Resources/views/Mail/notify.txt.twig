@@ -10,9 +10,9 @@
 
 {% autoescape false %}
 {{ 'email.admin_notification'|trans({
-    '%name%'   : comment.name,
-    '%email%'  : comment.email,
-    '%comment%': comment.message,
-    '%date%': comment.createdAt
-    }, 'BrotherCommentBundle')}}
+    '%name%'   : entry.name,
+    '%email%'  : entry.email,
+    '%comment%': entry.message,
+    '%date%': entry.createdAt|date('Y.m.d h:s')
+    }, 'BrotherGuestbookBundle')}}
 {% endautoescape %}

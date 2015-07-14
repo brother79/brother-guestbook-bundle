@@ -1,20 +1,8 @@
-Q:                Вопрос
-A:                Ответ
 Email:            Email
-Executor:         Исполнитель
-Edit GuestbookAdmin:  Редактировать вопрос
-GuestbookAdmin List:  Список вопросов
-Isp:              Исполнитель
 Comment:          Комментарий
 User:             Пользователь
 Update:           Обновить
 Approve:          Одобрить
 Show open:        Показать открытые
 Show new:         Показать новые
-Show in progress: Показать "В процессе"
-Show resolved:    Показать решённые
-Freeze:           Заморозить
-In progress:      В процессе
-Resolved:         Выполнено
-Priority:         Приоритет
-Guestbook List:       Вопрос-ответ список
+State:            Статус

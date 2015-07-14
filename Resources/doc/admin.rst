@@ -30,6 +30,4 @@ Other topics
 .. _Doctrine Configuration: Resources/doc/doctrine.rst
 .. _Mailer Configuration: Resources/doc/mailer.rst
 .. _Pager Configuration: Resources/doc/pager.rst
-.. _`Spam Detection`: Resources/doc/spam_detection.rst
-.. _`Views/Templates`: Resources/doc/views.rst
 .. _`Default Configuration`: Resources/doc/default_configuration.rst

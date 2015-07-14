@@ -8,7 +8,6 @@ Default Configuration
         entry_per_page: 25                                          # number of entries to show on a page
         auto_publish: true                                          # publish new entries or wait for admin approval
         notify_admin: false                                         # send notification mail to admin when a new entry is saved
-        spam_detection: false                                       # enable/disable spam detection
         date_format: "d/m/Y H:i:s"                                  # date format used
 
         mailer:
@@ -21,14 +20,6 @@ Default Configuration
             manager: Brother\GuestbookBundle\Entity\EntryManager        # (optional) guestbook manager class
             pager : Brother\GuestbookBundle\Pager\DefaultORM              # (optional) pager class
             mailer: Brother\GuestbookBundle\Mailer\Mailer               # (optional) mailer class
-
-        view:
-            frontend:
-                list: BrotherGuestbookBundle:Frontend:index.html.twig   # guestbook entries view
-                new: BrotherGuestbookBundle:Frontend:new.html.twig      # guestbook form
-
-            mail:
-                notify: BrotherGuestbookBundle:Mail:notify.txt.twig     # notification mail template
 
         form:
             entry:
@@ -49,8 +40,6 @@ Default Configuration
         service:
             pager: ~                                                # (optional) custom pager service
             mailer: ~                                               # (optional) custom mailer service
-            spam_detector: ~                                        # (optional) custom spam detector service
-
 
 Each of these configuration options can be overridden in your app/config/config.yml file
 
@@ -74,6 +63,4 @@ Other topics
 .. _Doctrine Configuration: Resources/doc/doctrine.rst
 .. _Mailer Configuration: Resources/doc/mailer.rst
 .. _Pager Configuration: Resources/doc/pager.rst
-.. _`Spam Detection`: Resources/doc/spam_detection.rst
-.. _`Views/Templates`: Resources/doc/views.rst
 .. _`Guestbook Administration`: Resources/doc/admin.rst

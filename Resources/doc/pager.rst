@@ -50,10 +50,6 @@ Other topics
 
 #. `Mailer Configuration`_
 
-#. `Spam Detection`_
-
-#. `Views/Templates`_
-
 #. `Guestbook Administration`_
 
 #. `Default Configuration`_
@@ -61,7 +57,5 @@ Other topics
 .. _Installation: Resources/doc/index.rst
 .. _`Doctrine Configuration`: Resources/doc/doctrine.rst
 .. _`Mailer Configuration`: Resources/doc/mailer.rst
-.. _`Spam Detection`: Resources/doc/spam_detection.rst
-.. _`Views/Templates`: Resources/doc/views.rst
 .. _`Guestbook Administration`: Resources/doc/admin.rst
 .. _`Default Configuration`: Resources/doc/default_configuration.rst
