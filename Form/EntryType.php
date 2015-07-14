@@ -9,6 +9,21 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class GuestbookType extends AbstractType
 {
     /**
+     * @var string
+     */
+    private $entryClass;
+
+    /**
+     * Constructor
+     *
+     * @param string $entryClass
+     */
+    public function __construct($entryClass)
+    {
+        $this->entryClass = $entryClass;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -40,6 +55,6 @@ class GuestbookType extends AbstractType
      */
     public function getName()
     {
-        return 'brother_guestbookbundle_guestbook';
+        return 'brother_guestbook_entry';
     }
 }

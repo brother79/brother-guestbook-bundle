@@ -23,27 +23,13 @@ use Symfony\Component\Form\FormInterface;
 /**
  * Base class for the guestbook manager.
  */
-abstract class EntryManager implements EntryManagerInterface
+abstract class EntryManager extends ORMEntryManager
 {
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $dispatcher;
-
-    /**
-     * @var string
-     */
-    protected $class;
 
     /**
      * @var boolean
      */
     protected $autoPublish = true;
-
-    /**
-     * @var Pagination object
-     */
-    protected $pager = null;
 
     /**
      * Constructor.
@@ -52,11 +38,11 @@ abstract class EntryManager implements EntryManagerInterface
      * @param string                                              			$class
      * @param boolean                                              			$autoPublish
      */
-    public function __construct(EventDispatcherInterface $dispatcher, $class, $autoPublish)
+    public function __construct(EventDispatcherInterface $dispatcher, EntityManager $em, $class, $autoPublish)
     {
         $this->dispatcher = $dispatcher;
         $this->class = $class;
-        $this->autoPublish = $autoPublish;
+        parent::__construct($dispatcher, $em, $class );
     }
 
     /**

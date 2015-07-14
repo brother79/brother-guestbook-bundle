@@ -9,7 +9,7 @@
 #}
 
 <div class="brother-guestbook-form-container col-xs-9 col-sm-7 col-md-4">
-    {{ form_start(form, {'action': path('brother_guestbook_create'), 'method': 'POST', 'attr': {'class': 'form-horizontal brother-guestbook-form', 'role': 'form'} }) }}
+    {{ form_start(form, {'action': path('brother_guestbook_create_ajax'), 'method': 'POST', 'attr': {'class': 'form-horizontal brother-guestbook-form', 'role': 'form'} }) }}
         <div class="form-error">{{ form_errors(form.name) }}</div>
         <div class="input-group form-group">
             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>

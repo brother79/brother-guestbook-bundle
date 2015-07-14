@@ -82,11 +82,6 @@ class BrotherGuestbookExtension extends Extension
         $container->setParameter('brother_guestbook.form.reply.type', $config['form']['reply']['type']);
         $container->setParameter('brother_guestbook.form.reply.class', $config['form']['reply']['class']);
 
-        // views
-        $container->setParameter('brother_guestbook.view.frontend.list', $config['view']['frontend']['list']);
-        $container->setParameter('brother_guestbook.view.frontend.new', $config['view']['frontend']['new']);
-        $container->setParameter('brother_guestbook.view.mail.notify', $config['view']['mail']['notify']);
-
         // set model class
         if (isset($config['class']['model'])) {
             $container->setParameter('brother_guestbook.model.entry.class', $config['class']['model']);

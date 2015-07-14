@@ -1,7 +1,6 @@
-{% extends 'BrotherGuestbookBundle:Frontend:layout.html.twig' %}
-
-{% block body -%}
-    <h1>Guestbook list</h1>
+    <div class="brother-guestbook-container">
+        <div class="brother-guestbook-panel-container">
+            <h1>Гостевая книга</h1>
 
     <table class="records_list">
         <thead>
@@ -60,11 +59,7 @@
             <i class="glyphicon glyphicon-plus-sign"></i>  {{ 'link.sign_guestbook'|trans({}, 'BrotherGuestbookBundle') }}
         </a>
     </li>
-{% endblock %}
 
-{% block content %}
-    <div class="brother-guestbook-container">
-        <div class="brother-guestbook-panel-container">
             {% if entries|length > 0 %}
 				{% for entry in entries %}
 					<div class="panel panel-default">
@@ -95,5 +90,4 @@
 
         {{ include('BrotherGuestbookBundle:Frontend:form.html.twig',{ 'form': form })}}
     </div>
-{% endblock %}
 

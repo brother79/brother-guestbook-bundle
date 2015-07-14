@@ -2,6 +2,10 @@
 
 namespace Brother\GuestbookBundle\Controller;
 
+use Brother\CommonBundle\AppTools;
+use Brother\CommonBundle\Controller\BaseController;
+use Brother\CommonBundle\Model\BaseApi;
+use Brother\GuestbookBundle\Form\EntryType;
 use Brother\GuestbookBundle\Model\EntryManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,14 +31,12 @@ class EntryController extends BaseController
     {
         $manager = $this->getManager();
         $limit = $this->container->getParameter('brother_guestbook.entry_per_page');
-
         $entries = $manager->getPaginatedList($page, $limit, array('state'=>1));
         $pagerHtml = $manager->getPaginationHtml();
 
-        $view = $this->getView('frontend.list');
         $form = $this->getFormFactory('entry');
 
-        return $this->render($view, array(
+        return $this->render('BrotherGuestbookBundle:Entry:index.html.twig', array(
                 'entries'=>$entries,
                 'form' => $form->createView(),
                 'pagination_html' => $pagerHtml,
@@ -46,30 +48,34 @@ class EntryController extends BaseController
 
     /**
      * Creates a new Guestbook entity.
-     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createAction(Request $request)
     {
         $entity = new Entry();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
+        $result = new BaseApi();
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('brother_guestbook_show', array('id' => $entity->getId())));
+            // notify admin
+            if ($this->container->getParameter('brother_guestbook.notify_admin')) {
+                $this->get('brother_guestbook.mailer')->sendAdminNotification($entity);
+            }
+            return $this->ajaxResponse($result->addMessage('Ваш комментарий получен. Вы можете оставить ещё один.')
+                ->addRenderDom('#guestbook_new_dialog', array('modal' => 'hide'))
+                ->result());
         }
-
-        return $this->render('BrotherGuestbookBundle:Guestbook:new.html.twig', array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        ));
+        $result->setErrors(AppTools::getFormErrors($form));
+        return $this->ajaxResponse($result->result());
     }
 
     /**
-     * Creates a form to create a Guestbook entity.
+     * Creates a form to create a Entry entity.
      *
      * @param Entry $entity The entity
      *
@@ -77,12 +83,12 @@ class EntryController extends BaseController
      */
     private function createCreateForm(Entry $entity)
     {
-        $form = $this->createForm(new GuestbookType(), $entity, array(
-            'action' => $this->generateUrl('guestbook_create'),
+        $form = $this->createForm(new EntryType(get_class($entity)), $entity, array(
+            'action' => $this->generateUrl('brother_guestbook_create_ajax'),
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => 'Отправить комментарий'));
 
         return $form;
     }
@@ -91,37 +97,18 @@ class EntryController extends BaseController
      * Displays a form to create a new Guestbook entity.
      *
      */
-    public function newAction()
+    public function newDialogAction()
     {
         $entity = new Entry();
         $form = $this->createCreateForm($entity);
+        $result = new BaseApi();
 
-        return $this->render('BrotherGuestbookBundle:Guestbook:new.html.twig', array(
+        return $this->ajaxResponse($result
+            ->addRenderDom('body', array('appendModal' => $this->render('BrotherGuestbookBundle:Entry:_new_dialog.html.twig', array(
             'entity' => $entity,
             'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a Guestbook entity.
-     *
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('BrotherGuestbookBundle:Entry')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Guestbook entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return $this->render('BrotherGuestbookBundle:Guestbook:show.html.twig', array(
-            'entity' => $entity,
-            'delete_form' => $deleteForm->createView(),
-        ));
+            ))->getContent()))
+            ->result());
     }
 
     /**
@@ -383,7 +370,7 @@ class EntryController extends BaseController
      *
      * @return EntryManagerInterface | \Brother\GuestbookBundle\Entity\EntryManager
      */
-    public function getManager()
+    private function getManager()
     {
         if (null === $this->manager) {
             $this->manager = $this->container->get('brother_guestbook.entry_manager');
@@ -399,7 +386,7 @@ class EntryController extends BaseController
      *
      * @return \Symfony\Component\Form\Form
      */
-    public function getFormFactory($name)
+    private function getFormFactory($name)
     {
         return $this->container->get('brother_guestbook.form_factory.' . $name);
     }

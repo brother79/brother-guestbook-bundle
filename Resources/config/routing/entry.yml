@@ -1,39 +1,35 @@
 brother_guestbook_list:
     path:     /{page}
-    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:index", page: 1 }
+    defaults: { _controller: "BrotherGuestbookBundle:Entry:index", page: 1 }
     requirements:
         page: \d+
 
-brother_guestbook_show:
-    path:     /{id}/show
-    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:show" }
-
-brother_guestbook_new:
+brother_guestbook_new_dialog:
     path:     /new
-    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:new" }
+    defaults: { _controller: "BrotherGuestbookBundle:Entry:newDialog" }
 
-brother_guestbook_create:
+brother_guestbook_create_ajax:
     path:     /create
-    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:create" }
+    defaults: { _controller: "BrotherGuestbookBundle:Entry:create" }
     methods: [POST]
 
 
-brother_guestbook_edit:
+brother_guestbook_edit_dialog:
     path:     /{id}/edit
-    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:edit" }
+    defaults: { _controller: "BrotherGuestbookBundle:Entry:edit" }
     requirements:
         page: \d+
 
-brother_guestbook_update:
+brother_guestbook_update_ajax:
     path:     /{id}/update
-    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:update" }
+    defaults: { _controller: "BrotherGuestbookBundle:Entry:update" }
     methods:  [POST, PUT]
     requirements:
         page: \d+
 
 brother_guestbook_delete:
     path:     /{id}/delete
-    defaults: { _controller: "BrotherGuestbookBundle:Guestbook:delete" }
+    defaults: { _controller: "BrotherGuestbookBundle:Entry:delete" }
     methods:  [POST, DELETE]
     requirements:
         page: \d+

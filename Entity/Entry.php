@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Default ORM Entry Entity.
  */
-class Entry extends AbstractEntry
+class Entry implements EntryInterface, MailerEntryInterface
 {
     /**
      * @var integer
