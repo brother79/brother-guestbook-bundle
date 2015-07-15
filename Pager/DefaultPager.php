@@ -1,6 +1,7 @@
 <?php
 
 namespace Brother\GuestbookBundle\Pager;
+use Brother\CommonBundle\Pager\PagerInterface;
 
 /**
  * Default Pager.
