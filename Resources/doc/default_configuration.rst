@@ -18,7 +18,7 @@ Default Configuration
         class:
             model: Brother\GuestbookBundle\Entity\Entry                 # (optional) guestbook model class
             manager: Brother\GuestbookBundle\Entity\EntryManager        # (optional) guestbook manager class
-            pager : Brother\GuestbookBundle\Pager\DefaultORM              # (optional) pager class
+            pager : Brother\CommonBundle\Pager\DefaultORM              # (optional) pager class
             mailer: Brother\GuestbookBundle\Mailer\Mailer               # (optional) mailer class
 
         form:
