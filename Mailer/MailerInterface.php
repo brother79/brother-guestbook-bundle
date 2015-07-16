@@ -2,7 +2,7 @@
 
 namespace Brother\GuestbookBundle\Mailer;
 
-use Brother\CommonBundle\Model\Entry\EntryInterface;
+use Brother\CommonBundle\Mailer\MailerEntryInterface;
 use Symfony\Component\Form\FormInterface;
 
 
@@ -12,15 +12,15 @@ use Symfony\Component\Form\FormInterface;
 interface MailerInterface
 {
     /**
-     * @param EntryInterface $comment
+     * @param MailerEntryInterface $comment
      */
-    public function sendAdminNotification(EntryInterface $comment);
+    public function sendAdminNotification(MailerEntryInterface $comment);
 
     /**
      * @param \Symfony\Component\Form\FormInterface		$form
-     * @param EntryInterface              				$comment
+     * @param MailerEntryInterface              				$comment
      */
-    public function sendReply(FormInterface $form, EntryInterface $comment);
+    public function sendReply(FormInterface $form, MailerEntryInterface $comment);
 
     /**
      * @param array $options

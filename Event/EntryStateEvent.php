@@ -2,7 +2,7 @@
 
 namespace Brother\GuestbookBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Brother\CommonBundle\Event\EntriesEvent;
 
 /**
  * An event that occurs related to updating the state 

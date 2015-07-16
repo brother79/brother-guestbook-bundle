@@ -29,9 +29,9 @@ class BrotherGuestbookExtension extends Extension
         $guestbookConfig = $this->processConfiguration(new Configuration(), $configs);
 
         if ('orm' == $guestbookConfig['db_driver']) {
-            $brotherConfig['class']['pager'] = 'Brother\GuestbookBundle\Pager\DefaultORM';
+            $brotherConfig['class']['pager'] = 'Brother\CommonBundle\Pager\DefaultORM';
         } else {
-            $brotherConfig['class']['pager'] = 'Brother\GuestbookBundle\Pager\DefaultMongodb';
+            $brotherConfig['class']['pager'] = 'Brother\CommonBundle\Pager\DefaultMongodb';
         }
 
         // add the BrotherGuestbookBundle configurations
