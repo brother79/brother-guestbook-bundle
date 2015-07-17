@@ -27,7 +27,7 @@ brother_guestbook_update_ajax:
     requirements:
         page: \d+
 
-brother_guestbook_delete:
+brother_guestbook_delete_ajax:
     path:     /{id}/delete
     defaults: { _controller: "BrotherGuestbookBundle:Entry:delete" }
     methods:  [POST, DELETE]
