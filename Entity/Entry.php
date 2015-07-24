@@ -85,6 +85,24 @@ class Entry implements EntryInterface, MailerEntryInterface
     }
 
     /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
      * Set name
      *
      * @param string $name
@@ -98,13 +116,13 @@ class Entry implements EntryInterface, MailerEntryInterface
     }
 
     /**
-     * Get name
+     * Get email
      *
      * @return string
      */
-    public function getName()
+    public function getEmail()
     {
-        return $this->name;
+        return $this->email;
     }
 
     /**
@@ -121,13 +139,13 @@ class Entry implements EntryInterface, MailerEntryInterface
     }
 
     /**
-     * Get email
+     * Get comment
      *
      * @return string
      */
-    public function getEmail()
+    public function getComment()
     {
-        return $this->email;
+        return $this->comment;
     }
 
     /**
@@ -143,16 +161,6 @@ class Entry implements EntryInterface, MailerEntryInterface
         return $this;
     }
 
-    /**
-     * Get comment
-     *
-     * @return string
-     */
-    public function getComment()
-    {
-        return $this->comment;
-    }
-
     public function getAnnounce()
     {
         if (mb_strlen($this->comment, 'utf-8') > 100) {
@@ -163,6 +171,16 @@ class Entry implements EntryInterface, MailerEntryInterface
             return $this->comment;
         }
         return mb_substr($this->comment, 0, 100, 'utf-8');
+    }
+
+    /**
+     * Get state
+     *
+     * @return boolean
+     */
+    public function getState()
+    {
+        return $this->state;
     }
 
     /**
@@ -179,13 +197,13 @@ class Entry implements EntryInterface, MailerEntryInterface
     }
 
     /**
-     * Get state
+     * Get replied
      *
      * @return boolean
      */
-    public function getState()
+    public function getReplied()
     {
-        return $this->state;
+        return $this->replied;
     }
 
     /**
@@ -202,13 +220,13 @@ class Entry implements EntryInterface, MailerEntryInterface
     }
 
     /**
-     * Get replied
+     * Get created_at
      *
-     * @return boolean
+     * @return \DateTime
      */
-    public function getReplied()
+    public function getCreatedAt()
     {
-        return $this->replied;
+        return $this->created_at;
     }
 
     /**
@@ -220,29 +238,6 @@ class Entry implements EntryInterface, MailerEntryInterface
     public function setCreatedAt($createdAt)
     {
         $this->created_at = $createdAt;
-
-        return $this;
-    }
-
-    /**
-     * Get created_at
-     *
-     * @return \DateTime
-     */
-    public function getCreatedAt()
-    {
-        return $this->created_at;
-    }
-
-    /**
-     * Set updated_at
-     *
-     * @param \DateTime $updatedAt
-     * @return Entry
-     */
-    public function setUpdatedAt($updatedAt)
-    {
-        $this->updated_at = $updatedAt;
 
         return $this;
     }
@@ -261,16 +256,33 @@ class Entry implements EntryInterface, MailerEntryInterface
     }
 
     /**
-     * Set replied_at
+     * Set updated_at
      *
-     * @param \DateTime $repliedAt
+     * @param \DateTime $updatedAt
      * @return Entry
      */
-    public function setRepliedAt($repliedAt)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->replied_at = $repliedAt;
+        $this->updated_at = $updatedAt;
 
         return $this;
+    }
+
+  /**
+     * validate date fields
+     *
+     * @param mixed $date
+     * @return bool
+     */
+    function validateDate($date)
+    {
+        if(! $date instanceof \DateTime) {
+            return false;
+		}
+
+        list($month, $day, $year) = explode('-', $date->format('n-j-Y'));
+
+        return checkdate( (int)$month, (int)$day , (int)$year );
     }
 
     /**
@@ -285,6 +297,19 @@ class Entry implements EntryInterface, MailerEntryInterface
         }
 
         return $this->replied_at;
+    }
+
+    /**
+     * Set replied_at
+     *
+     * @param \DateTime $repliedAt
+     * @return Entry
+     */
+    public function setRepliedAt($repliedAt)
+    {
+        $this->replied_at = $repliedAt;
+
+        return $this;
     }
 
     /**
@@ -316,17 +341,14 @@ class Entry implements EntryInterface, MailerEntryInterface
         $this->replied_at = new \DateTime();
     }
 
-    /**
-     * Set user
-     *
-     * @param \Brother\GuestbookBundle\Entity\%sonata.user.admin.user.class% $user
-     * @return Entry
-     */
-    public function setUser($user = null)
+    public function getImage()
     {
-        $this->user = $user;
+        return $this->hasImage() ? $this->getUser()->getImage() : null;
+    }
 
-        return $this;
+    public function hasImage()
+    {
+        return $this->getUser() && $this->getUser()->getImage();
     }
 
     /**
@@ -339,38 +361,16 @@ class Entry implements EntryInterface, MailerEntryInterface
         return $this->user;
     }
 
-    public function hasImage()
-    {
-        return $this->getUser() && $this->getUser()->getImage();
-    }
-
-    public function getImage()
-    {
-        return $this->hasImage() ? $this->getUser()->getImage() : null;
-    }
-
     /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-  /**
-     * validate date fields
+     * Set user
      *
-     * @param mixed $date 
-     * @return bool 
+     * @param \Brother\GuestbookBundle\Entity\%sonata.user.admin.user.class% $user
+     * @return Entry
      */
-    function validateDate($date)
+    public function setUser($user = null)
     {
-        if(! $date instanceof \DateTime) {
-            return false;
-		}
-		
-        list($month, $day, $year) = explode('-', $date->format('n-j-Y'));
-		
-        return checkdate( (int)$month, (int)$day , (int)$year );
+        $this->user = $user;
+
+        return $this;
     }
 }
