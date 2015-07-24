@@ -13,4 +13,4 @@ services:
             - %brother_guestbook.model.entry.class%
             - %brother_guestbook.auto_publish%
         calls:
-            - [setPager, ['@brother_guestbook.pager']]
+            - [setPager, ['@knp_paginator']]

@@ -73,43 +73,11 @@ class EntryManager extends ORMEntryManager
             $queryBuilder->orderBy('c.created_at', 'DESC');    //default ordering
         }
 
-		if (null === $this->pager) {
+		if (null === $this->paginator) {
 			return $queryBuilder->getQuery()->getResult();
 		}
 		
-        return $this->pager->getList($queryBuilder, $offset, $limit);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function doDelete($ids)
-    {
-        $this->em->createQueryBuilder()
-            ->delete($this->getClass(), 'c')
-            ->where('c.id IN (:ids)')
-            ->setParameter('ids', $ids)
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function doUpdateState($ids, $state)
-    {
-        $this->em->createQueryBuilder()
-            ->update($this->getClass(), 'c')
-            ->set('c.state', ':state')
-            ->set('c.updatedAt', ':date' )
-            ->where('c.id IN (:ids)')
-            ->setParameters( array(
-                'state' => $state,
-                'ids' => $ids,
-                'date' => new \DateTime(),
-            ))
-            ->getQuery()
-            ->execute();
+        return $this->makeKnpPagination($limit, array('page' => $offset, 'target' => $queryBuilder->getQuery()));
     }
 
     /**
@@ -134,38 +102,6 @@ class EntryManager extends ORMEntryManager
         $this->dispatcher->dispatch(Events::ENTRY_CREATE, $event);
 
         return $entry;
-    }
-
-    /**
-     * Persists a guestbook entry.
-     *
-     * @param EntryInterface $entry
-     *
-     * @return boolean
-     */
-    public function save(EntryInterface $entry)
-    {
-        // set state for new entry
-        if ($this->isNew($entry))  {
-            if($this->autoPublish) {
-                $entry->setState(1);
-            } else {
-                $entry->setState(0);
-            }
-        }
-
-        $event = new EntryEvent($entry);
-        $this->dispatcher->dispatch(Events::ENTRY_PRE_PERSIST, $event);
-
-        $this->doSave($entry);
-
-        if ($event->isPropagationStopped()) {
-            return false;
-        }
-
-        $this->dispatcher->dispatch(Events::ENTRY_POST_PERSIST, $event);
-
-        return true;
     }
 
     /**
@@ -215,6 +151,19 @@ class EntryManager extends ORMEntryManager
     }
 
     /**
+     * {@inheritDoc}
+     */
+    protected function doDelete($ids)
+    {
+        $this->em->createQueryBuilder()
+            ->delete($this->getClass(), 'c')
+            ->where('c.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * Update the state of a list of guestbook entries
      *
      * @param array 	$ids
@@ -236,6 +185,25 @@ class EntryManager extends ORMEntryManager
         $this->dispatcher->dispatch(Events::ENTRY_POST_UPDATE_STATE, $event);
 
         return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function doUpdateState($ids, $state)
+    {
+        $this->em->createQueryBuilder()
+            ->update($this->getClass(), 'c')
+            ->set('c.state', ':state')
+            ->set('c.updatedAt', ':date' )
+            ->where('c.id IN (:ids)')
+            ->setParameters( array(
+                'state' => $state,
+                'ids' => $ids,
+                'date' => new \DateTime(),
+            ))
+            ->getQuery()
+            ->execute();
     }
 
     /**
@@ -267,6 +235,38 @@ class EntryManager extends ORMEntryManager
         $entry->updateRepliedAt();
 
         return $this->save($entry);
+    }
+
+    /**
+     * Persists a guestbook entry.
+     *
+     * @param EntryInterface $entry
+     *
+     * @return boolean
+     */
+    public function save(EntryInterface $entry)
+    {
+        // set state for new entry
+        if ($this->isNew($entry))  {
+            if($this->autoPublish) {
+                $entry->setState(1);
+            } else {
+                $entry->setState(0);
+            }
+        }
+
+        $event = new EntryEvent($entry);
+        $this->dispatcher->dispatch(Events::ENTRY_PRE_PERSIST, $event);
+
+        $this->doSave($entry);
+
+        if ($event->isPropagationStopped()) {
+            return false;
+        }
+
+        $this->dispatcher->dispatch(Events::ENTRY_POST_PERSIST, $event);
+
+        return true;
     }
 
 }
