@@ -22,18 +22,22 @@ interface EntryManagerInterface
      *
      * @param array $criteria
      *
+     * @param array $orderBy
+     *
      * @return EntryInterface
      */
-    public function findOneBy(array $criteria);
+    public function findOneBy(array $criteria, array $orderBy = NULL);
 
     /**
      * Finds guestbook entries by the given criteria
      *
      * @param array $criteria
      *
+     * @param array $orderBy
+     *
      * @return array of EntryInterface
      */
-    public function findBy(array $criteria);
+    public function findBy(array $criteria, array $orderBy = NULL);
 
     /**
      * Creates an empty guestbook entry instance
